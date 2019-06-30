@@ -681,50 +681,6 @@ def t_SOMEHEX4(tok):
     return tok
 
 make_tokens("OPERATOR", r'operator\s+(?P<val>%s)\s',op_token_value,"""
-    add
-    and
-    andassign
-    addr
-    assign
-    call
-    compound
-    delete
-    deref
-    div
-    divassign
-    eq
-    ge
-    gt
-    le
-    lnot
-    lshift
-    lshiftassign
-    lt
-    minus
-    minusassign
-    mult
-    multassign
-    ne
-    neg
-    new
-    or
-    orassign
-    plus
-    plusassign
-    postdec
-    postinc
-    predec
-    preinc
-    rshift
-    vecdelete
-    vecnew
-    xor
-    xorassign
-    not
-    pos
-    ref
-    rshiftassign
-    subs
 """)
 
 

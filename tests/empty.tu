@@ -10862,12 +10862,8 @@
                          addr: 7f0dd2799640 
 @4525   function_type    size: @12      algn: 8        retn: @129    
                          prms: @4528    addr: 7f0dd279ad20 
-@4526   function_decl    name: @4529    type: @4530    scpe: @154    
-                         srcp: <built-in>:0            chain: @4531   
-                         body: undefined               link: extern  
-                         addr: 7f0dd279b7e0 
-@4527   reference_type   size: @22      algn: 64       refd: @139    
-                         addr: 7f0dd279a888 
+@4526   function_decl    name: @4529 type: @4530 scpe: @154    srcp: <built-in>:0   chain: @4531 body: undefined  link: extern   addr: 7f0dd279b7e0 
+@4527   reference_type size: @22 algn: 64 refd: @139 addr: 7f0dd279a888
 @4528   tree_list        valu: @4527    chan: @165     addr: 7f0dd2796ca8 
 @4529   identifier_node  strg: __builtin_ms_va_copy    lngt: 20      
                          addr: 7f0dd2799690 
