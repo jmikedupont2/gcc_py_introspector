@@ -65,8 +65,7 @@ class SourceGen:
 
         def reference(self):
             self.visitor._print(
-                "Reference to Node: %s %s" % (
-                    self.node.node_id(), self.node.typename())
+                "Reference to Node: %s %s" % (self.node.node_id(), self.node.typename())
             )
             self.emit_reference()
             # self.visit_scalars()

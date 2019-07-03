@@ -94,8 +94,7 @@ def p_node_constructor_vals(psr_val):
 @parser_node_rule
 def p_node_constructor_empty(psr_val):
     "node : NODE NTYPE_CONSTRUCTOR LEN"
-    psr_val[0] = {"__type__": "constructor",
-                  "node": psr_val[1], "idx_len": psr_val[3]}
+    psr_val[0] = {"__type__": "constructor", "node": psr_val[1], "idx_len": psr_val[3]}
 
 
 # pprint.pprint(psr_val[0])

@@ -114,7 +114,10 @@ def std_attrs(psr_val):
 def create_rules(tstr):
     for token in tstr.split():
         token = token.upper()
-        def func(x): return x
+
+        def func(x):
+            return x
+
         rule = "ntype : %s" % token
         func.__doc__ = rule
         current_module = sys.modules[__name__]

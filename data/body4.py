@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from body3 import *
+from .body3 import *
 
 function_decl(
     link="extern",

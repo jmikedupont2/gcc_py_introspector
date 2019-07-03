@@ -51,8 +51,7 @@ class Resolver:
             return {"name": "chain", "val": val}
 
         debug(
-            {"phase": "process_stack", "name": name,
-                "val": val, "nt": nt, "seen": seen}
+            {"phase": "process_stack", "name": name, "val": val, "nt": nt, "seen": seen}
         )
         # v = Resolver.resolve2(val,seen, name, nt)
         v = Resolver.resolve(Resolver.get_node_objs(val), seen, name)
@@ -191,8 +190,7 @@ class Resolver:
             if True:
 
                 d2 = Resolver.resolve(
-                    d, {"stack": [], "seen": {},
-                        "node_type": nt, "node_id": x}, "start"
+                    d, {"stack": [], "seen": {}, "node_type": nt, "node_id": x}, "start"
                 )
                 # if 'name' in d2:
                 # print('name:',x, nt,d2['name'])

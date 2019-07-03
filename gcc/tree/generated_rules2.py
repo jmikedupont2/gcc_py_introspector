@@ -714,10 +714,12 @@ if __name__ == "__main__":
 
         print(
             (
-                """
+                (
+                    """
 @parser_node_rule
 def p_{name}_node(psr_val):
     'node : NODE {name} attr_list'
         """
-            ).format(name=x)
+                ).format(name=x)
+            )
         )

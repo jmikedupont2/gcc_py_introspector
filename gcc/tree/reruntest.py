@@ -33,8 +33,7 @@ for pair in pairs:
     if True:
         print(("running test %s" % n))
         print((" ".join(["python3", "reader.py", "%s/%s" % (directory, n)])))
-        x = subprocess.call(
-            ["python3", "reader.py", "%s/%s" % (directory, n), "debug"])
+        x = subprocess.call(["python3", "reader.py", "%s/%s" % (directory, n), "debug"])
         print(("%s %s" % (n, x)))
         # os.unlink('lasterror.txt',"%s/%s.lasterror.txt" % (directory,n))
 
