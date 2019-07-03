@@ -7,6 +7,8 @@ import json
 # import pprint
 
 # print out what field types occur
+
+
 def ftypes():
     t = {}
     results = prefix.q(

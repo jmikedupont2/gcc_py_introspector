@@ -1,3 +1,28 @@
+from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
+from SPARQLWrapper.Wrapper import (
+    _SPARQL_DEFAULT,
+    _SPARQL_XML,
+    _SPARQL_JSON,
+    _SPARQL_POSSIBLE,
+    _RDF_XML,
+    _RDF_N3,
+    _RDF_JSONLD,
+    _RDF_POSSIBLE,
+)
+from SPARQLWrapper import (
+    SPARQLWrapper,
+    XML,
+    N3,
+    JSONLD,
+    JSON,
+    POST,
+    GET,
+    SELECT,
+    CONSTRUCT,
+    ASK,
+    DESCRIBE,
+)
+from graphviz import Digraph
 import prefix
 import types
 import json
@@ -269,32 +294,6 @@ def function_decl(**kwargs):
 
 
 lookup = globals()
-
-from graphviz import Digraph
-from SPARQLWrapper import (
-    SPARQLWrapper,
-    XML,
-    N3,
-    JSONLD,
-    JSON,
-    POST,
-    GET,
-    SELECT,
-    CONSTRUCT,
-    ASK,
-    DESCRIBE,
-)
-from SPARQLWrapper.Wrapper import (
-    _SPARQL_DEFAULT,
-    _SPARQL_XML,
-    _SPARQL_JSON,
-    _SPARQL_POSSIBLE,
-    _RDF_XML,
-    _RDF_N3,
-    _RDF_JSONLD,
-    _RDF_POSSIBLE,
-)
-from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 
 
 def decl_expr(**kwargs):

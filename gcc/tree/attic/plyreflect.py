@@ -91,7 +91,7 @@ class Parser(Module):
 
                         metadata["token_meta"].append(
                             {
-                                #'name': t,
+                                # 'name': t,
                                 "token": tokens[t]
                             }
                         )
@@ -100,7 +100,7 @@ class Parser(Module):
                         # matches
                         metadata["token_meta"].append(
                             {
-                                #'name': t,
+                                # 'name': t,
                                 "token": None
                             }
                         )

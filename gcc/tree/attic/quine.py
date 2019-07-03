@@ -40,6 +40,22 @@ http://alexleone.blogspot.com/2010/01/python-ast-pretty-printer.html
 
 # ~/py/python/Lib/ast.py
 # ~/py/python/Lib/test/test_ast.py
+import plyreflect
+import inspect
+import pycparser
+import io
+import astroid.node_classes
+import types
+import pypy.interpreter.pyparser.pygram
+import Cython.Compiler.ExprNodes
+import tuparser
+import pgen2.token
+import redbaron.nodes
+import baron
+import rply
+import meta
+import appdirs
+import unparse
 import ast
 
 import sys
@@ -50,35 +66,26 @@ home = os.environ["HOME"]
 # the unparser is embedded here.
 # ~/py/python/Tools/parser/unparse.py
 # sys.path.append(home + "/py/python/Tools/parser")
-import unparse
 
 # tree = compile(source, filename, "exec", ast.PyCF_ONLY_AST)
 
 
 # git@github.com:ActiveState/appdirs.git
 sys.path.append(home + "/py/appdirs")
-import appdirs
 
 sys.path.append(home + "/py/Meta")
-import meta
 
 # git@github.com:alex/rply.git
 sys.path.append(home + "/py/rply")
-import rply
 
 # https://github.com/PyCQA/baron
 sys.path.append(home + "/py/baron")
-import baron
 
 # htts://github.com/Psycojoker/redbaron
 sys.path.append(home + "/py/redbaron")
-import redbaron.nodes
 
 # htts://github.com/Psycojoker/redbaron
 sys.path.append(home + "/py/lib2to3")
-import redbaron.nodes
-import pgen2.token
-import tuparser
 
 # hg clone https://bitbucket.org/takluyver/greentreesnakes
 # Read: http://greentreesnakes.readthedocs.org/en/latest/nodes.html#literals
@@ -96,11 +103,7 @@ sys.path.append(home + "/py/pypy")
 
 # git clone git@github.com:cython/cython.git
 sys.path.append(home + "/py/cython")
-import Cython.Compiler.ExprNodes
 
-import pypy.interpreter.pyparser.pygram
-
-import types
 
 # pyflakes uses ast and NUM
 # git@github.com:pyflakes/pyflakes.git
@@ -108,7 +111,6 @@ import types
 
 # git@github.com:PyCQA/astroid.git
 sys.path.append(home + "/py/astroid")  # needs to be installed, python3 code
-import astroid.node_classes
 
 # astroid/node_classes.py
 
@@ -121,7 +123,6 @@ sys.path.append(home + "/py/iast")
 
 # consult
 # ~/py/python/Parser/Python.asdl
-import io
 
 
 class PyAst:
@@ -185,7 +186,8 @@ class TuNode:
 class NodeType(TuNode, PyAst):
     @classmethod
     def verify(cls):
-        pprint.pprint({"Token": cls.token(), "ast": PyAst.verify()})  # cls.ast_flip()
+        # cls.ast_flip()
+        pprint.pprint({"Token": cls.token(), "ast": PyAst.verify()})
 
 
 class Constant(NodeType):
@@ -226,7 +228,6 @@ class IntegerConstant(Constant):
 
 # https://github.com/eliben/pycparser
 sys.path.append(home + "/py/pycparser")
-import pycparser
 
 # ~/py/pycparser/pycparser/c_lexer.py
 
@@ -319,10 +320,8 @@ class StringConstant(Constant):
 # convert to/from some json format
 # convert to/from assembler.....
 # convert to/from network package
-import inspect
 
 # import pprint
-import plyreflect
 
 
 def main(args):

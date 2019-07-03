@@ -1,3 +1,28 @@
+from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
+from SPARQLWrapper.Wrapper import (
+    _SPARQL_DEFAULT,
+    _SPARQL_XML,
+    _SPARQL_JSON,
+    _SPARQL_POSSIBLE,
+    _RDF_XML,
+    _RDF_N3,
+    _RDF_JSONLD,
+    _RDF_POSSIBLE,
+)
+from SPARQLWrapper import (
+    SPARQLWrapper,
+    XML,
+    N3,
+    JSONLD,
+    JSON,
+    POST,
+    GET,
+    SELECT,
+    CONSTRUCT,
+    ASK,
+    DESCRIBE,
+)
+
 source = "http://introspector.xyz/projects/bash/build/eval.c.001t.tu"
 tg = source + "#"
 fld = "http://introspector.xyz/gcc/field_types.owl#"
@@ -30,32 +55,6 @@ def clean(x):
         .replace(nt, "node:")
     )
     # .replace(":","_")\
-
-
-from SPARQLWrapper import (
-    SPARQLWrapper,
-    XML,
-    N3,
-    JSONLD,
-    JSON,
-    POST,
-    GET,
-    SELECT,
-    CONSTRUCT,
-    ASK,
-    DESCRIBE,
-)
-from SPARQLWrapper.Wrapper import (
-    _SPARQL_DEFAULT,
-    _SPARQL_XML,
-    _SPARQL_JSON,
-    _SPARQL_POSSIBLE,
-    _RDF_XML,
-    _RDF_N3,
-    _RDF_JSONLD,
-    _RDF_POSSIBLE,
-)
-from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 
 
 def q(q):

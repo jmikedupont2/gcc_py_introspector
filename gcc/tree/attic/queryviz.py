@@ -1,3 +1,4 @@
+import json
 from graphviz import Digraph
 from SPARQLWrapper import (
     SPARQLWrapper,
@@ -37,20 +38,20 @@ prefixes = """
 """
 
 fields = [
-    #'chain', # dangerous... used too many times. need to qualify name
-    #'chan',
-    #'cnst',
-    #'csts',
-    #'domn',
-    #'elts',
-    #'flds',
-    #'link',
-    #'scpe',
-    #'tag',
-    #'type',
-    #'unql',
-    #'used',
-    #'valu',
+    # 'chain', # dangerous... used too many times. need to qualify name
+    # 'chan',
+    # 'cnst',
+    # 'csts',
+    # 'domn',
+    # 'elts',
+    # 'flds',
+    # 'link',
+    # 'scpe',
+    # 'tag',
+    # 'type',
+    # 'unql',
+    # 'used',
+    # 'valu',
     # u'algn',
     # u'argt',
     # u'bpos',
@@ -106,8 +107,6 @@ fields = [
 ]
 # FILTER (?b != link:undefined)
 
-
-import json
 
 # import pprint
 

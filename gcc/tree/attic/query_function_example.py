@@ -851,9 +851,6 @@ SELECT ?a ?p ?o ?t  WHERE {
     return d, dt
 
 
-import types
-
-
 def recurse_ref(s, subtree):
     print(("RECURSE for %s\n" % s))
     print(("using subtree : %s" % subtree["name"]))

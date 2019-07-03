@@ -1,4 +1,5 @@
 # import sched_dep
+import importlib
 import os
 import sys
 
@@ -135,8 +136,6 @@ def main(input_data):
         else:
             pass
 
-
-import importlib
 
 if len(sys.argv) > 1:
     name = sys.argv[1]

@@ -5,6 +5,10 @@
 # component_ref ? Attribute
 
 # decl_expr Complex
+from ast import *
+import ast
+import compiler.ast
+import meta
 import pprint2
 import inspect
 
@@ -14,7 +18,6 @@ import os
 home = os.environ["HOME"]
 
 sys.path.append(home + "/py/Meta")
-import meta
 
 
 def p(**kwargs):
@@ -29,10 +32,6 @@ class Tu:
 
     def __call__(a, b):
         p(a=a, b=b)
-
-
-import compiler.ast
-import ast
 
 
 class Reflect:
@@ -73,9 +72,9 @@ def reflect(m):
     return Reflect(m)
 
 
-from ast import *
-
 # @tu("eq_expr")
+
+
 class EqExpr:
     @reflect
     def example():
