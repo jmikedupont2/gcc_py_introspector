@@ -1,34 +1,55 @@
 import pprint
 import json
 
-class NodeDecl :
+
+class NodeDecl:
     """A node is declared in the tu file for the first time with an id and a node type"""
+
     def __init__(self, _id, _type, value):
         self._id = _id
         self._type = _type
+
     def to_json(self):
-        #print(json.dumps(self.__dict__))
+        print((json.dumps(self.__dict__)))
         pass
-    
+
+
 class TypeDecl(NodeDecl):
     "type_decl"
-    
+
+
 class IdentifierNode(NodeDecl):
     """identifier_node"""
+
+
 class IntegerType(NodeDecl):
     """integer_type"""
+
+
 class IntegerCst(NodeDecl):
     """integer_cst"""
+
+
 class RealType(NodeDecl):
     """real_type"""
+
+
 class ComplexType(NodeDecl):
     """complex_type"""
+
+
 class VoidType(NodeDecl):
     """void_type"""
+
+
 class ArrayType(NodeDecl):
     """array_type"""
+
+
 class RecordType(NodeDecl):
     """record_type"""
+
+
 class AggrInitExpr(NodeDecl):
     """aggr_init_expr"""
 
@@ -408,77 +429,102 @@ class TargetExpr(NodeDecl):
 class TemplateDecl(NodeDecl):
     """template_decl"""
 
+
 class TemplateIdExpr(NodeDecl):
     """template_id_expr"""
+
 
 class TemplateParmIndex(NodeDecl):
     """template_parm_index"""
 
+
 class TemplateTemplateParm(NodeDecl):
     """template_template_parm"""
+
 
 class TemplateTypeParm(NodeDecl):
     """template_type_parm"""
 
+
 class ThrowExpr(NodeDecl):
     """throw_expr"""
+
 
 class TraitExpr(NodeDecl):
     """trait_expr"""
 
+
 class TranslationUnitDecl(NodeDecl):
     """translation_unit_decl"""
+
 
 class TreeList(NodeDecl):
     """tree_list"""
 
+
 class TreeVec(NodeDecl):
     """tree_vec"""
+
 
 class TruncDivExpr(NodeDecl):
     """trunc_div_expr"""
 
+
 class TruncModExpr(NodeDecl):
     """trunc_mod_expr"""
+
 
 class TruthAndExpr(NodeDecl):
     """truth_and_expr"""
 
+
 class TruthOrExpr(NodeDecl):
     """truth_or_expr"""
+
 
 class TruthAndifExpr(NodeDecl):
     """truth_andif_expr"""
 
+
 class TruthNotExpr(NodeDecl):
     """truth_not_expr"""
+
 
 class TruthOrifExpr(NodeDecl):
     """truth_orif_expr"""
 
+
 class TryBlock(NodeDecl):
     """try_block"""
+
 
 class TypeidExpr(NodeDecl):
     """typeid_expr"""
 
+
 class TypenameType(NodeDecl):
     """typename_type"""
+
 
 class TypeofType(NodeDecl):
     """typeof_type"""
 
+
 class UnionType(NodeDecl):
     """union_type"""
+
 
 class UsingDecl(NodeDecl):
     """using_decl"""
 
+
 class UsingStmt(NodeDecl):
     """using_stmt"""
 
+
 class VarDecl(NodeDecl):
     """var_decl"""
+
 
 class VectorType(NodeDecl):
     """vector_type"""
@@ -487,22 +533,34 @@ class VectorType(NodeDecl):
 class WhileStmt(NodeDecl):
     """while_stmt"""
 
+
 class RdivExpr(NodeDecl):
     """rdiv_expr"""
 
 
 class MinExpr(NodeDecl):
     """min_expr"""
+
+
 class MaxExpr(NodeDecl):
     """max_expr"""
+
+
 class LrotateExpr(NodeDecl):
     """lrotate_expr"""
+
+
 class FloatExpr(NodeDecl):
     """float_expr"""
+
+
 class Constructor(NodeDecl):
     """constructor"""
+
+
 class CompoundLiteralExpr(NodeDecl):
     """compound_literal_expr"""
-    
-class AddrExpr (NodeDecl):
+
+
+class AddrExpr(NodeDecl):
     """addr_expr """

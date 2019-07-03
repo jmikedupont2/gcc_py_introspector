@@ -864,7 +864,7 @@ d={'addr_expr ': {'attrs_addr': 3197,
 
 def report():
     type2={}
-    for t in d.keys():
+    for t in list(d.keys()):
         #print t
         dl = t.split("_")
         t2 = dl[-1]
@@ -946,7 +946,7 @@ mysizes={
 
 def report2():
     type2={}
-    for t in d.keys():
+    for t in list(d.keys()):
         t2 = "all"
         dv =d[t]
         if t2 in type2:
@@ -966,11 +966,11 @@ def report2():
                     dv2[f]='ref'
 
     #pprint.pprint(type2)
-    print "from django.db import models"
-    print "class Node(models.Model):"
-    print "source_file= models.ForeignKey(SourceFile)"
-    print "nid= models.IntegerField()"
-    print "class Meta:\n    unique_together = (('source_file', 'node_id'),)"
+    print("from django.db import models")
+    print("class Node(models.Model):")
+    print("source_file= models.ForeignKey(SourceFile)")
+    print("nid= models.IntegerField()")
+    print("class Meta:\n    unique_together = (('source_file', 'node_id'),)")
     
     for f in type2:
         for f2 in type2[f]:
@@ -979,9 +979,9 @@ def report2():
             if f2.startswith('attrs_'):
                 f1=f2.replace('attrs_','')
                 s= mysizes[f1]
-                print "    %s = models.CharField(max_length=%d)" % (f2,s)
+                print("    %s = models.CharField(max_length=%d)" % (f2,s))
             else:
-                print "    %s = models.IntegerField()" % (f2)
+                print("    %s = models.IntegerField()" % (f2))
     
 
 report2()

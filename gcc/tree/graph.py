@@ -1,12 +1,11 @@
 class Graph:
-
     def __init__(self, data):
         self.data = data
 
     def node(self, i):
         if i in self.data:
             es = self.data[i]
-            if es :
+            if es:
                 return Node(es)
         else:
             pass
@@ -14,12 +13,14 @@ class Graph:
     def nodes(self):
         return Nodes(self.data)
 
+
 class Nodes:
     def __init__(self, data):
         self.data = data
 
     def __iter__(self):
         return NodeIter(self.data, 0)
+
 
 class NodeIter:
     def __init__(self, data, pos):
@@ -30,28 +31,31 @@ class NodeIter:
 
     def __next__(self):
         p = self.pos
-        self.pos = self.pos +1
+        self.pos = self.pos + 1
         if p < self.l:
             d = self.data[self.keys[p]]
-            if len(d) > 1 :
+            if len(d) > 1:
                 return Node(d)
         else:
             raise StopIteration
 
-class Node :
+
+class Node:
     """
     Handle a node
     """
+
     def __init__(self, data):
         self.data = data
 
-    def typename (self):
+    def typename(self):
         return self.data[0]
 
-    def fields (self):
+    def fields(self):
         return Fields(self.data[1])
 
-class Fields :
+
+class Fields:
     def __init__(self, data):
         self.data = data
 
@@ -61,6 +65,7 @@ class Fields :
     def __iter__(self):
         return FieldIter(self.data, 0)
 
+
 class FieldIter:
     def __init__(self, data, pos):
         self.data = data
@@ -69,17 +74,18 @@ class FieldIter:
 
     def __next__(self):
         p = self.pos
-        self.pos = self.pos +1
+        self.pos = self.pos + 1
         if p < self.l:
             d = self.data[p]
-            if len(d) > 1 :
+            if len(d) > 1:
                 return Field(d)
             else:
                 return FieldTodo(d)
         else:
             raise StopIteration
 
-class Field :
+
+class Field:
     def __init__(self, data):
         self.data = data
 
@@ -89,7 +95,8 @@ class Field :
     def value(self):
         return self.data[1]
 
-class FieldTodo :
+
+class FieldTodo:
     def __init__(self, data):
         self.data = data
 

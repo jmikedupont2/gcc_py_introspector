@@ -4,19 +4,21 @@ generates classes and provides lists of types.
 """
 import gcc.tree.types
 
+
 def generate_class(anode_type):
-    new_name = ''.join([a.title() for a in anode_type.split('_')])
-    c = '\n\nclass {}(NodeDecl):\n    """{}"""\n'.format(new_name,anode_type)
+    new_name = "".join([a.title() for a in anode_type.split("_")])
+    c = '\n\nclass {}(NodeDecl):\n    """{}"""\n'.format(new_name, anode_type)
     if not hasattr(gcc.tree.types, new_name):
-        with open("classes.txt",'a') as fo:
+        with open("classes.txt", "a") as fo:
             fo.write(c + "\n")
-            #print(c)
-            #setattr(gcc.tree.types, new_name, eval(c))
-    #return None
-    #else:
+            # print(c)
+            # setattr(gcc.tree.types, new_name, eval(c))
+    # return None
+    # else:
     return getattr(gcc.tree.types, new_name)
 
-NODE_NAMES ="""
+
+NODE_NAMES = """
 addr_expr
 aggr_init_expr
 alignof_expr
@@ -159,7 +161,7 @@ while_stmt"""
 NODE_TYPES = [x.strip() for x in NODE_NAMES.split("\n")]
 
 # cut -d: -f1 ~/experiments/linux/tools/perf/util/header.c.001t.tu | cut  "-d " -f3 | sort -u
-if __name__ == '__main__':
+if __name__ == "__main__":
     for y in NODE_TYPES:
-        print ("'{}'".format(y))
+        print(("'{}'".format(y)))
         generate_class(y)

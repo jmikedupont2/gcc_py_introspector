@@ -1,8 +1,9 @@
 import os
 import sys
+
 # The folder containing files.
 directory = sys.argv[1]
-print(('going to read %s' % (directory)))
+print(("going to read %s" % (directory)))
 
 # Get all files.
 list = os.listdir(directory)
@@ -11,7 +12,7 @@ list = os.listdir(directory)
 pairs = []
 for file in list:
 
-    if (file.endswith(".tu") or file.endswith(".t")) and '#' not in file:
+    if (file.endswith(".tu") or file.endswith(".t")) and "#" not in file:
         # Use join to get full file path.
         location = os.path.join(directory, file)
 
@@ -29,30 +30,36 @@ import os.path
 import time
 from threading import Thread
 
+
 def proc(n):
-    print ("running test %s" % n)
-    print (" ".join(['python3', './test.py', "%s/%s" % (directory,n)]))
-    x = subprocess.call(['python3', './test.py', "%s/%s" % (directory,n)
-                         #,'debug'
-    ])
-    print ("%s %s" % (n,x))
+    print(("running test %s" % n))
+    print((" ".join(["python3", "./test.py", "%s/%s" % (directory, n)])))
+    x = subprocess.call(
+        [
+            "python3",
+            "./test.py",
+            "%s/%s" % (directory, n)
+            # ,'debug'
+        ]
+    )
+    print(("%s %s" % (n, x)))
 
-    if os.path.isfile('lasterror.txt') :
-        os.rename('lasterror.txt',"%s/%s.lasterror.txt" % (directory,n))
+    if os.path.isfile("lasterror.txt"):
+        os.rename("lasterror.txt", "%s/%s.lasterror.txt" % (directory, n))
 
-    if os.path.isfile('Nodes.nodes.pickle') :
-        os.rename('Nodes.nodes.pickle',"%s/%s.nodes.pickle" % (directory,n))
+    if os.path.isfile("Nodes.nodes.pickle"):
+        os.rename("Nodes.nodes.pickle", "%s/%s.nodes.pickle" % (directory, n))
     else:
-        raise Exception('missing pickle')
-    
+        raise Exception("missing pickle")
+
     if x == 0:
-        print ("OK")
+        print("OK")
     else:
-        print ("fail")
-            
+        print("fail")
+
+
 for pair in pairs:
 
     n = pair[1]
     t = Thread(target=proc, args=(n,))
     t.start()
-     
