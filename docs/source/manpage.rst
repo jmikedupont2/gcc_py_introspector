@@ -14,7 +14,8 @@ SYNOPSIS
 DESCRIPTION
 ===========
 
-``gcc.tree`` is a command-line utility for reverse engineering c code and implementing compiler plugins in other languages.
+``gcc.tree`` is a command-line utility for reverse engineering c code
+and implementing compiler plugins in other languages.
 By default it includes plugins written by the author. It will also
 run third-party extensions if they are found and installed.
 

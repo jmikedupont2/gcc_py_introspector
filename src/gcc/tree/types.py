@@ -10,7 +10,7 @@ class NodeDecl:
         self._type = _type
 
     def to_json(self):
-        print((json.dumps(self.__dict__)))
+        #print((json.dumps(self.__dict__)))
         pass
 
 

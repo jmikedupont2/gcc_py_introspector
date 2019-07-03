@@ -297,14 +297,7 @@ def parse_l(l, rundebug, error_file, f):
     # print "Stack:%s" % stack
     return None
 
-
-@click.command()
-@click.argument("filename")
-@click.option("--debug", default=False, type=bool)
-def main(filename, debug):
-    """
-    Reader for a tu file
-    """
+def parse(filename, debug):
     print(("going to open %s" % filename))
     fd = open(filename)
     # open the error file in case there are any errors they will be written here.
@@ -330,7 +323,16 @@ def main(filename, debug):
     if line:
         gcc.tree.nodes.statement(parse_l(line, debug, error_file, f))
     f.close()
+    error_file.close()
 
+@click.command()
+@click.argument("filename")
+@click.option("--debug", default=False, type=bool)
+def main(filename, debug):
+    """
+    Reader for a tu file
+    """
+    parse(filename, debug)
 
 if __name__ == "__main__":
     main()

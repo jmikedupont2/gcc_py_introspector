@@ -227,10 +227,6 @@ def t_LEN(tok):  # constructor length
     return tok
 
 
-# t_LANG = r'C\s'
-# t_R = r'\sr\s'
-
-
 @token_rule
 def t_QUAL(tok):
     r"c\s|v\s|cv\s|r\s"
@@ -264,10 +260,6 @@ def t_NODE(tok):
 # this is skipped and does not produce a token
 def t_SPACE(tok):
     r"\s+"
-    # return { 'skip': True }
-
-
-# t_ERROR = 'error_mark'
 
 
 @TOKEN(r"(?P<val>addr_expr)\s?")
@@ -314,14 +306,14 @@ def t_ADDR_ATTR(tok):
 
 @token_rule
 def t_ATTR_En(tok):
-    "(E\d+)\s*:"
+    r"(E\d+)\s*:"
     tok.value = tok.value.replace(" :", "")
     return tok
 
 
 @token_rule
 def t_ATTR_OP(tok):
-    """(?P<val>OP\d+)\s*:"""
+    r"(?P<val>OP\d+)\s*:"
     # count_non_null(tok)
     tok.value = tok.lexer.lexmatch.group("val")
     # print("ATTR:%s" % tok.value)
@@ -378,7 +370,7 @@ def t_SIGNED(tok):
 # alis
 make_tokens(
     "ATTR",
-    "(?P<val>%s)\s*:",
+    r"(?P<val>%s)\s*:",
     attr_val,
     """
 accs
@@ -471,9 +463,6 @@ def t_HXX_FILE(tok):
     return tok
 
 
-# t_SCOPE = r'\:\:'
-# t_INTCONST = r'(\-)?\d+'
-# t_FLOAT = r'[+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?'
 t_ARTIFICIAL = r"artificial"
 t_LINK = r"static|undefined|extern"
 t_ACC = r"pub|priv|prot"
@@ -495,7 +484,7 @@ def op_token_value(tok):
 
 @token_rule
 def t_adr_HEXVAL(tok):
-    "(?P<hexval>[0-9a-f]+)(\s|$)"
+    r"(?P<hexval>[0-9a-f]+)(\s|$)"
     # tok.value = "HEXVAL" #int(tok.lexer.lexmatch.group("hexval"),16)
     # print("hexval1 %s " % tok.value)
     goto_state(tok, "INITIAL")

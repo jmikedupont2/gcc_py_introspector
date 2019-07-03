@@ -18,8 +18,8 @@ To install :term:`gcc.tree`, open an interactive shell and run:
 
     python<version> -m pip install gcc.tree
 
-If you want :term:`gcc.tree` to be installed for your default Python installation, you
-can instead use:
+If you want :term:`gcc.tree` to be installed for your default Python
+installation, you can instead use:
 
 .. code::
 

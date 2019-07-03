@@ -19,6 +19,7 @@ requires = [
     "pycodestyle >= 2.5.0, < 2.6.0",
     "mccabe >= 0.6.0, < 0.7.0",
     "ply",
+    'click'
 ]
 
 extras_require = {
@@ -36,8 +37,9 @@ if int(setuptools.__version__.split('.')[0]) < 18:
 
 setup(
     name="gcc.py.introspector",
-    version="0.01",
+    version="0.1",
     description="Python Parsing of GCC Tree Dump Utilities",
+    long_description="gcc .tu dump file processing utility",
     author="James Michael DuPont",
     author_email="jamesmikedupont@gmail.com",
     url="https://www.python.org/sigs/distutils-sig/",

@@ -1,11 +1,11 @@
 [run]
 branch = True
 source =
-    flake8
+    gcc.tree
 
 
 [paths]
 source =
-    src/flake8
-    .tox/*/lib/python*/site-packages/flake8
-    .tox/pypy/site-packages/flake8
+    src/gcc
+    .tox/*/lib/python*/site-packages/gcc
+    .tox/pypy/site-packages/gcc
