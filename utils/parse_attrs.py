@@ -1,6 +1,6 @@
 # parse the attrs
-import re
 import pprint
+import re
 
 f = open("attrs.txt")
 

@@ -1,3 +1,15 @@
+files := $(wildcard tests/*.tu)
+FILES2 := $(patsubst %.tu,%.tu.out,$(files))
+all : $(FILES2)
+	echo done
+
+%.tu.out : %.tu
+	python3.7 -m gcc.tree.reader --debug=True $<  > $@
+
+test1: $(files)
+	#python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/constructor_lngth_idx_val.tu
+	#	python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/real_value.tu
+	python3.7 -m gcc.tree.reader tests/*.tu --debug=True
 
 test:
 	#python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/constructor_lngth_idx_val.tu

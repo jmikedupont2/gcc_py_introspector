@@ -1,5 +1,8 @@
 #!/usr/bin/python
+import json
 import pprint
+
+import yaml
 
 
 def array_type(**kwargs):
@@ -55,7 +58,6 @@ def addr_expr(**kwargs):
         return {"addr_expr": kwargs}
 
 
-import yaml
 
 
 def modify_expr(**kwargs):
@@ -243,7 +245,6 @@ def Unknown():
     return "Unknown"
 
 
-import json
 
 
 def function_decl(**kwargs):

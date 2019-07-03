@@ -1,11 +1,7 @@
-/Makefile~
-/log.txt
-/log.txt~
-/parser.out
-/parsetab.py
-/reader.py~
-/test_lexer.py
-/test_lexer.py~
+.coverage.debian-build-speed.*
+src/gcc/tree/parser.out
+src/gcc/tree/parsetab.py
+tests/*.tu.out
 *.py[cod]
 
 # C extensions

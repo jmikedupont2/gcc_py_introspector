@@ -1,9 +1,11 @@
 #!/usr/bin/python
 
-import yaml
-from . import body2
-import types
 import pprint
+import types
+
+import yaml
+
+from . import body2
 
 # print yaml.dump(deep)
 

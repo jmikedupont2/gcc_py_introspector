@@ -1,11 +1,14 @@
 #!/usr/bin/python
 
-import yaml
-import data.body2
-import types
 import pprint
 import sys
+import types
 from ast import *
+
+import yaml
+
+import data.body2
+import unparse
 
 
 def get_args(args):
@@ -295,7 +298,6 @@ def rec(x, i=0):
 
 new_ast = rec(data.body2.deep)
 
-import unparse
 
 # now lets try and unparse it....
 unparse.Unparser(new_ast, sys.stdout)
