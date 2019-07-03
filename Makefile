@@ -1,7 +1,8 @@
 
 test:
 	#python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/constructor_lngth_idx_val.tu
-	python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/real_value.tu
+	#	python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/real_value.tu
+	python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu --debug=True
 
 linux:
 	python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu

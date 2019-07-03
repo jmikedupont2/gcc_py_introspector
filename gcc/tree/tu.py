@@ -39,6 +39,7 @@ tokens = [
     "ATTR_En",
     "OP0_ATTR",
     "OP1_ATTR",
+    "OP2_ATTR",
     "TYPE_ATTR",
     "ADDR_ATTR",
     "ADDR_EXPR",
@@ -291,8 +292,11 @@ def t_OP1_ATTR(tok):
     tok.value = str(tok.lexer.lexmatch.group("val"))
     return tok
 
-
-# attributes like 'address: 5fa31238843838' in the newer compilers
+@token_rule
+def t_OP2_ATTR(tok):
+    r"(?P<val>OP2)\s*:"
+    tok.value = str(tok.lexer.lexmatch.group("val"))
+    return tok
 
 
 @token_rule
