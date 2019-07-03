@@ -3,6 +3,7 @@ reader
 '''
 from gcc.tree.attributes import parser_rule,parser_node_rule, parser_simple_rule
 # this first rule is synthetic and matches any nodes
+from gcc.tree.symbol_table import nodes_seen, declare_node
 
 start = 'anynode'
 
@@ -11,6 +12,8 @@ def p_any_node(psr_val):
     'anynode : node '
     # the node declaration
     psr_val[0]=psr_val[1]
+    
+    declare_node(psr_val[1])
 
 import pprint
 import gcc.tree.pprint2
@@ -18,7 +21,7 @@ import gcc.tree.pprint2
 import ply.yacc as yacc # Get the token map from the lexer.  This is required.
 from gcc.tree.tu import tokens
 import gcc.tree.tuast  # import Link
-from gcc.tree.utils import goto_initial, create_list, merge_list
+from gcc.tree.utils import goto_initial, create_list #, merge_list
 
 # the first rule is important
 import gcc.tree.nodes
@@ -27,15 +30,15 @@ import gcc.tree.nodes
 def p_node_id(psr_val):
     # the identifier node declaration
     'node : NODE HEXVAL attr_list' # len_attrs
-    psr_val[0] = { 'node' : nodes.declare(psr_val[1]),
+    psr_val[0] = Node({ 'node' : nodes.declare(psr_val[1]),
                    'hexval' :psr_val[2],
                    'attr_list' : psr_val[3]
-    }
+    })
     goto_initial(psr_val)  # begin the string group
 
 @parser_node_rule
 def p_node_constructor(psr_val):
-    'node : NODE CONSTRUCTOR LEN idx_val_list'
+    'node : NODE NTYPE_CONSTRUCTOR LEN idx_val_list'
     psr_val[0] = {
         '__type__' :'constructor',
         'node' : psr_val[1],
@@ -46,7 +49,7 @@ def p_node_constructor(psr_val):
    
 @parser_node_rule
 def p_node_constructor_vals(psr_val):
-    'node : NODE CONSTRUCTOR LEN val_list'
+    'node : NODE NTYPE_CONSTRUCTOR LEN val_list'
     psr_val[0] = {
         '__type__' :'constructor',
         'node' : psr_val[1],
@@ -57,7 +60,7 @@ def p_node_constructor_vals(psr_val):
    
 @parser_node_rule
 def p_node_constructor_empty(psr_val):
-    'node : NODE CONSTRUCTOR LEN'
+    'node : NODE NTYPE_CONSTRUCTOR LEN'
     psr_val[0] = {
         '__type__' :'constructor',
         'node' : psr_val[1],
@@ -348,6 +351,15 @@ def p_idx_val_item(psr_val):
     #nd.ref(psr_val[0])
     #nd2.ref(psr_val[0])
 
+def p_idx_val_short(psr_val):
+    'idx_val_list : ATTR_IDX NODE ATTR_VAL NODE'
+    nd = gcc.tree.nodes.reference(psr_val[2],'idx')
+    nd2 = gcc.tree.nodes.reference(psr_val[4],'val')
+    psr_val[0] = {
+        'idx' : nd,
+        'val' : nd2,
+    }
+
 def p_val_item2(psr_val):
     'val_list : ATTR_VAL NODE val_list'
     nd = gcc.tree.nodes.reference(psr_val[2],'val')
@@ -388,22 +400,27 @@ def p_idx_val_item2(psr_val):
     }
     
 
-
+class StringAttrs:
+    def __init__(self, strattrs, alist=None):
+        self.string = strattrs
+        self._list = alist
+    
 @parser_rule
 def p_attr_list2(psr_val):
     'attr_list : str_attrs attr_list'
-    psr_val[0] = {
-        'strattrs': psr_val[1],
-        'list': psr_val[2]
-    }
+    psr_val[0] = StringAttrs(
+        **{
+            'strattrs': psr_val[1],
+            'alist': psr_val[2]
+        })
 
     
 @parser_rule
 def p_attr_list2_end(psr_val):
     'attr_list : str_attrs'
-    psr_val[0] = {
+    psr_val[0] = StringAttrs(**{
         'strattrs': psr_val[1]
-    }
+    })
 
 @parser_rule
 def p_attr_list4(psr_val):
@@ -425,46 +442,38 @@ def p_attr_lista(psr_val):
     'attr_list : attrs'
     psr_val[0] = psr_val[1]
 
-
+class List:
+    def __init__(self, attrs, _list):
+        self.attrs = attrs
+        self._list = list
+    def collapse(self):
+        #todo
+        ""
 #@parser_rule
 def p_attr_list3(psr_val):
     'attr_list : type_attrs attr_list'
     #psr_val[0] = {'type_attrs'psr_val[1],psr_val[2]{
-    psr_val[0] = merge_list(
-        {
-            '__type__':'attr_list',
+    psr_val[0] = List(**{
+        #'__type__':'attr_list',
             'attrs': psr_val[1],
-            'list': psr_val[2]
-        }
-    )
+            '_list': psr_val[2]
+        }).collapse()
 
-
-#@parser_rule
-# def p_attr_list2a(psr_val):
-#     'attr_list : str_attrs'
-#     psr_val[0] = psr_val[1]
-
-#@parser_rule
 def p_attr_list(psr_val):
     'attr_list : attrs attr_list'
-    psr_val[0] = merge_list({'__type__':'attr_list', 'attrs': psr_val[1], 'list': psr_val[2]})
+    #pprint.pprint({'psr_val':psr_val.slice})
+    #pprint.pprint({'psr_val1':psr_val[1]})
+    #pprint.pprint({'psr_val2':psr_val[2]})
+    psr_val[0] = List(**{#'__type__':'attr_list',
+                       'attrs': psr_val[1], '_list': psr_val[2]}).collapse()
 
-# #@parser_rule
-# def p_attr_list4a(psr_val):
-#     'attr_list : addr_attrs'
-#     psr_val[0] = psr_val[1]
-
-# #@parser_rule
-# def p_attr_list_empty(psr_val):
-#     'attr_list : '
-#     psr_val[0] = {
-#         'type' : 'null',
-#         'note' : 'empty list'
-#     }
  
 #@parser_rule
 def p_attr_list3a(psr_val):
     'attr_list : type_attrs'
+    #pprint.pprint({'psr_val':psr_val.slice})
+    #pprint.pprint({'psr_val1':psr_val[1]})
+
     psr_val[0] = psr_val[1]
 
 def p_error(x):

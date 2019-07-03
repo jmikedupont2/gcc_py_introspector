@@ -1,0 +1,3 @@
+@2503   function_decl    srcp: ostream:108
+@2503   function_decl    name: @2187    mngl: @3063    type: @3064 scpe: @710   chain: @3065    note: operator lshift note: member   accs: pub      args: @3066 body: undefined               link: extern
+@2503   function_decl    name: @2187    mngl: @3063    type: @3064 scpe: @710     srcp: ostream:108 chain: @3065    note: operator lshift note: member   accs: pub      args: @3066 body: undefined               link: extern

@@ -4,7 +4,7 @@ import ply.lex as lex
 from gcc.tree.nodes import attrs, declare, reference
 from gcc.tree.debug import debug, debug2, debug4
 from gcc.tree.tnode import TNode
-
+from gcc.tree.structure import generate_class
 #funcs = {}
 import pprint
 
@@ -67,7 +67,7 @@ def parser_node_rule(f):
 
         debug2( 'Parser node f', f)
         
-        anode_type= psr_val.slice[2].value
+        anode_type= psr_val.slice[2].value.strip()
 
         debug(pformat2({ 'slice' :psr_val.slice,
                                                'stack' : psr_val.stack}))
@@ -89,25 +89,23 @@ def parser_node_rule(f):
         debug( 'Parser node f', node_id, anode_type)
 
         r= f(psr_val)
-        if anode_type in registry  :
-            debug( "going to create ", anode_type)
-            cls = registry[anode_type]
-            obj = cls(node_id, anode_type, psr_val)
-            psr_val[0] = obj
-        else:
-            debug(pformat2(registry))
-            debug( "going to create default", anode_type, node_id)
-            if anode_type not in types:
-                types[anode_type]=1
-            else:
+        if anode_type not in registry  :            
+            registry[anode_type] = generate_class(anode_type)
+        debug( "going to create ", anode_type)
+        cls = registry[anode_type]
+        
+        obj = cls(node_id, anode_type, psr_val)
+        psr_val[0] = obj
+        # else:
+        #     debug(pformat2(registry))
+        #     debug( "going to create default", anode_type, node_id)
+        #     if anode_type not in types:
+        #         types[anode_type]=1
+        #     else:
 
-                types[anode_type]=types[anode_type]+1
-            psr_val[0] = {
-                'node_decl': node_id,
-                'type': anode_type ,
-                #'body': psr_val
-            }
-
+        #         types[anode_type]=types[anode_type]+1
+        #     psr_val[0] = NodeDecl(_id=node_id,
+        #                           _type=anode_type)
         
         debug(pformat2(psr_val[0]))
         
@@ -184,7 +182,10 @@ def report():
     debug( 'report')
     debug(pformat2( types))
     #debug(pformat2( funcs))
-
+class Rule :
+    def __init__(self, **kwargs):
+        self.__dict__ = kwargs
+        
 def parser_simple_rule(f):
     """
     parser simple rule
@@ -223,10 +224,10 @@ def parser_simple_rule(f):
         #     else:
         #         types[node_type]=types[node_type]+1
 
-        psr_val[0] = {
+        psr_val[0] = Rule(**{
             #'node_type' : f.__name__,
             field_name.value : field_value.value
-        }
+        })
         debug( " attr %s" % pformat2( psr_val[0]))
 
     wrapper.doc = doc
@@ -269,10 +270,10 @@ def parser_simple_rule_node(f):
         #     else:
         #         types[node_type]=types[node_type]+1
 
-        psr_val[0] = { #'node_type' : f.__name__,
+        psr_val[0] = Rule(**{ #'node_type' : f.__name__,
             field_name.value : field_value
 
-        }
+        })
 
         #field_value.ref(psr_val[0])
 

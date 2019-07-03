@@ -3,6 +3,7 @@ reader module
 '''
 import sys
 import os
+import click
 from gcc.tree.debug import debug
 #home = os.environ['HOME']
 #user = os.environ['USER']
@@ -283,18 +284,18 @@ def parse_l(l, rundebug, error_file, f):
     #print "Stack:%s" % stack
     return None
 
-def main():
+@click.command()
+@click.argument('filename')
+@click.option('--debug',default=False,type=bool)
+def main(filename,debug):
     """
     Reader for a tu file
     """
-    print ("going to open %s" % sys.argv[1])
-    fd = open(sys.argv[1])
+    print ("going to open %s" % filename)
+    fd = open(filename)
     # open the error file in case there are any errors they will be written here.
-    error_file = open(sys.argv[1] + ".err", "w")
-    if len(sys.argv) > 2:
-        rundebug = True
-    else:
-        rundebug = False
+    error_file = open(filename + ".err", "w")
+
 
     f = open ('lasterror.txt','a')
 
@@ -306,7 +307,7 @@ def main():
 
         if l[0] == '@':
             if line:
-                gcc.tree.nodes.statement(parse_l(line, rundebug, error_file, f))
+                gcc.tree.nodes.statement(parse_l(line, debug, error_file, f))
 
                 
             line = l
@@ -315,7 +316,7 @@ def main():
     fd.close()
 
     if line:
-        gcc.tree.nodes.statement(parse_l(line, rundebug, error_file, f))
+        gcc.tree.nodes.statement(parse_l(line, debug, error_file, f))
     f.close()
 
 if __name__ == '__main__':

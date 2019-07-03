@@ -11,7 +11,7 @@ usage
 
 convert the tu to python:
 
-    python reader.py file.tu > test_graph.py
+    python gcc/tree/reader.py  file.tu > test_graph.py
 
 now you can split up the output:
 

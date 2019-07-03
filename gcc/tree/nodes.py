@@ -126,12 +126,12 @@ def statement(x):
     #global Nodes.nodes
     if x:
         #pprint.pprint(x)
-        nid = x['node_decl']
+        nid = x._id
         
         #if nid in gcc.tree.nodes.Nodes.nodes:
         #    gcc.tree.nodes.Nodes.nodes[nid]['decl'] = x
         #else:
-        gcc.tree.nodes.Nodes.nodes[nid]['type'] =  x['type']
+        gcc.tree.nodes.Nodes.nodes[nid]['type'] =  x._type
 
         #gcc.tree.nodes.Nodes.nodes[nid]['stack'] =list(Nodes.stack)
 
@@ -168,14 +168,14 @@ def attrs(v):
     if type (v) == str:
         raise Exception(v)
         #v = {'unkown': v}
-    if 'type' in v:
-        if 'attrs' in v['type']:
-            raise Exception('to complex')
+    #if 'type' in v:
+    #    if 'attrs' in v['type']:
+    #        raise Exception('to complex')
     #pprint.pprint({'push':v})
     #pickle.dump(v,f)
-    for x in v.keys():
-        v2 = v[x]
-        gcc.tree.nodes.Nodes.aobj[x]=v2
+    #for x in v.keys():
+    #    v2 = v[x]
+    #    gcc.tree.nodes.Nodes.aobj[x]=v2
 
 def report():
     print("Nodes.Nodes Report:")

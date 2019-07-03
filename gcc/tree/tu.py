@@ -1,5 +1,5 @@
 '''
-lexer
+.tu lexer
 '''
 import ply.lex as lex
   # import ply.yacc as yacc
@@ -9,7 +9,8 @@ import sys
 import gcc.tree.pprint2
 from gcc.tree.attributes import token_rule
 from gcc.tree.utils import goto_state,  emit_parser_rule
-
+from gcc.tree.symbol_table import nodes_seen
+import gcc.tree.structure
 DEBUG = 0
 
 states = (
@@ -19,11 +20,14 @@ states = (
     ('prec','exclusive'),
     ('algn','exclusive'),
     ('adr','exclusive'),
-#    ('type','exclusive'),
 )
 
+
+def create_operator(x):
+    return 'OPERATOR_{}'.format(x)
+
+
 tokens = [
-#    'SPACE',
     'LEN',
     'SPEC_REGISTER',
     'ATTR_ALGN',
@@ -36,31 +40,23 @@ tokens = [
     'TYPE_ATTR',
     'ADDR_ATTR',
     'ADDR_EXPR',
-#    'ASM_EXPR',
-#    'SAVE_EXPR',
-#    'PREDICT_EXPR',
     'SPEC_ATTR',
     'SPEC_VALU',
     'CONSTRUCTOR',
     'QUAL',
-#    'FLOAT',
     'PSEUDO',
     'TMPL',
     'STRG',
-#    'STRGLEN',
     "NODE",
-#    "TNODE",
     'SPEC',
     "BUILTIN_FILE",
     'HXX_FILE',
     'ARTIFICIAL',
-#    'LANG',
     'SIGNED',
     'LINK',
     'STRUCT',
     'ACC',
     'MEMBER',
-#    'NOTE',
     'SOMESTRG', # catchall
     'SOMEINT', # int
     'SOMEINT2', # int
@@ -68,12 +64,52 @@ tokens = [
     'SOMEHEX3', # int
     'SOMEHEX4', # int
     'HEXVAL',
-    'NTYPE_IDENTIFIER_NODE',
-    # special names
- #   'LONG',
     'INT',
- #   'UNSIGNED',
-#    'STRGLEN2'
+    create_operator('ADD'),
+    create_operator('ADDR'),
+    create_operator('AND'),
+    create_operator('ANDASSIGN'),
+    create_operator('ASSIGN'),
+    create_operator('CALL'),
+    create_operator('COMPOUND'),
+    create_operator('DELETE'),
+    create_operator('DEREF'),
+    create_operator('DIV'),
+    create_operator('DIVASSIGN'),
+    create_operator('EQ'),
+    create_operator('GE'),
+    create_operator('GT'),
+    create_operator('LE'),
+    create_operator('LNOT'),
+    create_operator('LSHIFT'),
+    create_operator('LSHIFTASSIGN'),
+    create_operator('LT'),
+    create_operator('MINUS'),
+    create_operator('MINUSASSIGN'),
+    create_operator('MULT'),
+    create_operator('MULTASSIGN'),
+    create_operator('NE'),
+    create_operator('NEG'),
+    create_operator('NEW'),
+    create_operator('NOT'),
+    create_operator('OR'),
+    create_operator('ORASSIGN'),
+    create_operator('PLUS'),
+    create_operator('PLUSASSIGN'),
+    create_operator('POS'),
+    create_operator('POSTDEC'),
+    create_operator('POSTINC'),
+    create_operator('PREDEC'),
+    create_operator('PREINC'),
+    create_operator('REF'),
+    create_operator('RSHIFT'),
+    create_operator('RSHIFTASSIGN'),
+    create_operator('SUBS'),
+    create_operator('VECDELETE'),
+    create_operator('VECNEW'),
+    create_operator('XOR'),
+    create_operator('XORASSIGN'),
+    "REALVALUE"
 ]
 
 @token_rule
@@ -144,137 +180,7 @@ def ntype_value(tok) :
     return tok 
 
 # the following are node types
-make_tokens("NTYPE", "(?P<val>%s)",ntype_value,"""
-aggr_init_expr
-alignof_expr
-asm_expr
-save_expr
-array_ref
-array_type
-arrow_expr
-baselink
-bind_expr
-binfo
-bit_and_expr
-bit_ior_expr
-bit_not_expr
-bit_xor_expr
-bit_field_ref
-boolean_type
-bound_template_template_parm
-break_stmt
-call_expr
-case_label_expr
-cast_expr
-complex_type
-component_ref
-compound_expr
-convert_expr
-cond_expr
-const_cast_expr
-const_decl
-continue_stmt
-ctor_initializer
-decl_expr
-decltype_type
-dl_expr
-do_stmt
-dotstar_expr
-dynamic_cast_expr
-enumeral_type
-eq_expr
-error_mark
-expr_stmt
-field_decl
-for_stmt
-function_decl
-function_type
-ge_expr
-goto_expr
-gt_expr
-handler
-if_stmt
-indirect_ref
-integer_cst
-integer_type
-label_decl
-lang_type
-le_expr
-lshift_expr
-lt_expr
-label_expr
-member_ref
-mem_ref
-method_type
-minus_expr
-modop_expr
-modify_expr
-mult_expr
-namespace_decl
-ne_expr
-negate_expr
-nop_expr
-nw_expr
-offset_type
-overload
-parm_decl
-plus_expr
-pointer_type
-pointer_bounds_type
-pointer_plus_expr
-postdecrement_expr
-postincrement_expr
-predecrement_expr
-preincrement_expr
-predict_expr
-ptrmem_cst
-real_cst
-real_type
-result_decl
-record_type
-reference_type
-reinterpret_cast_expr
-return_expr
-rshift_expr
-scope_ref
-sizeof_expr
-statement_list
-static_cast_expr
-string_cst
-switch_stmt
-switch_expr
-tag_defn
-target_expr
-template_decl
-template_id_expr
-template_parm_index
-template_template_parm
-template_type_parm
-throw_expr
-trait_expr
-translation_unit_decl
-tree_list
-tree_vec
-trunc_div_expr
-trunc_mod_expr
-truth_and_expr
-truth_or_expr
-truth_andif_expr
-truth_not_expr
-truth_orif_expr
-try_block
-type_decl
-typeid_expr
-typename_type
-typeof_type
-union_type
-using_decl
-using_stmt
-var_decl
-vector_type
-void_type
-while_stmt
-""")
+make_tokens("NTYPE", "(?P<val>%s)",ntype_value,gcc.tree.structure.NODE_NAMES)
 
 
 t_PSEUDO = 'pseudo'
@@ -283,7 +189,6 @@ t_TMPL = 'tmpl'
 
 # can be used as a node type or a note
 t_CONSTRUCTOR = 'constructor'
-
 
 
 @token_rule
@@ -300,10 +205,11 @@ def t_STRG(tok):
 
 @token_rule
 def t_LEN(tok): # constructor length
-    r'lngt:\s*(\d+)'  # (?P<len>\d+)
+    r'lngt:\s*(?P<len>\d+)'  # (?P<len>\d+)
     #goto_state(tok,'len')  # begin the string group
-    #print 'constructor lngt: token'
+    # print('constructor lngt: "{}"'.format( tok.lexer.lexmatch.group("len")))
     return tok
+
 
 
 #t_LANG = r'C\s'
@@ -334,6 +240,11 @@ def t_NODE(tok):
     #     print ("test:%d %s" % (y, x))
 
     tok.value = strval
+    if strval not in nodes_seen:
+        #raise Exception(strval)
+        nodes_seen[strval] = "declared"
+    else:
+        tok.value2 = nodes_seen[strval]
     return tok
 
 
@@ -444,10 +355,6 @@ def t_SIGNED(tok):
     return tok
 
 
-#sign
-#prec
-#algn
-# removing lngt
 # this next call creates tokens for the following fields
 # each field can be used to give a new key value pair to a node
 # the field name is used to construct a function for recieving it.
@@ -578,8 +485,6 @@ def t_adr_HEXVAL(tok) :
 def t_INT(tok):
     r'int:\s+'
     return tok
-
-
 
 
 @token_rule
@@ -719,11 +624,13 @@ def t_algn_error(t):
 def t_sign_error(t):
     raise TypeError("Unknown sign text '%s'" % (t.value, ))
 
+@token_rule
+def t_REALVALUE(tok): # 1.0e+0
+    r'(?P<real>\d+\.\d+e\+\d+)'
+    return tok
 
 #g_lex = lex.lex(debug=1)
 g_lex = lex.lex()
 
 if __name__ == '__main__':
     g_lex.runmain()
-
-#g_lex = lex.lex()

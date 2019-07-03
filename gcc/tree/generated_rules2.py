@@ -398,6 +398,61 @@ def p_NTYPE_IDENTIFIER_NODE_node(psr_val):
 @parser_node_rule
 def p_NTYPE_SAVE_EXPR_node(psr_val):
     'node : NODE NTYPE_SAVE_EXPR attr_list'
+
 @parser_node_rule
 def p_NTYPE_ASM_EXPR_node(psr_val):
     'node : NODE NTYPE_ASM_EXPR attr_list'
+
+@parser_node_rule
+def p_NTYPE_ADDR_EXPR_node(psr_val):
+    'node : NODE NTYPE_ADDR_EXPR attr_list'
+
+@parser_node_rule
+def p_NTYPE_COMPOUND_LITERAL_EXPR_node(psr_val):
+    'node : NODE NTYPE_COMPOUND_LITERAL_EXPR attr_list'
+
+
+@parser_node_rule
+def p_NTYPE_CONSTRUCTOR_node(psr_val):
+    'node : NODE NTYPE_CONSTRUCTOR attr_list'
+
+
+@parser_node_rule
+def p_NTYPE_FLOAT_EXPR_node(psr_val):
+    'node : NODE NTYPE_FLOAT_EXPR attr_list'
+
+
+@parser_node_rule
+def p_NTYPE_LROTATE_EXPR_node(psr_val):
+    'node : NODE NTYPE_LROTATE_EXPR attr_list'
+
+
+@parser_node_rule
+def p_NTYPE_MAX_EXPR_node(psr_val):
+    'node : NODE NTYPE_MAX_EXPR attr_list'
+
+
+@parser_node_rule
+def p_NTYPE_MIN_EXPR_node(psr_val):
+    'node : NODE NTYPE_MIN_EXPR attr_list'
+
+
+@parser_node_rule
+def p_NTYPE_RDIV_EXPR_node(psr_val):
+    'node : NODE NTYPE_RDIV_EXPR attr_list'
+
+if __name__ == '__main__':
+    for x in (    
+        'NTYPE_COMPOUND_LITERAL_EXPR' ,
+        'NTYPE_CONSTRUCTOR' ,
+        'NTYPE_FLOAT_EXPR' ,
+        'NTYPE_LROTATE_EXPR' ,
+        'NTYPE_MAX_EXPR' ,
+        'NTYPE_MIN_EXPR' ,
+        'NTYPE_RDIV_EXPR' ):
+    
+        print ("""
+@parser_node_rule
+def p_{name}_node(psr_val):
+    'node : NODE {name} attr_list'
+        """).format(name=x)

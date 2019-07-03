@@ -137,33 +137,35 @@ def attr_base(psr_val):
     return attr
 
 # merge the attributes in the list with the object
-def merge_list(t) :
-    #pprint.pprint({'mergelist':t})                    
-    r =  {}
-    if '__type__' in t :
-        if t['__type__'] == 'attr_list':
-            if 'list' in t:
-                if t['list']:
-                    r=t['list'] # just use this
-                else:
-                    #pprint.pprint({'check':t})
-                    raise Exception("null")
+# def merge_list(t) :
+#     t.collapse_list()
+#     #pprint.pprint({'mergelist':t})
+    
+#     # r =  {}
+#     # if '__type__' in t :
+#     #     if t['__type__'] == 'attr_list':
+#     #         if 'list' in t:
+#     #             if t['list']:
+#     #                 r=t['list'] # just use this
+#     #             else:
+#     #                 pprint.pprint({'check':t})
+#     #                 raise Exception("null")
 
-            if 'attrs' in t:
-                #pprint.pprint(t)
+#     #         # if 'attrs' in t:
+#     #         #     #pprint.pprint(t)
                 
-                if 'type' in t['attrs']:
-                    if 'val' in t['attrs']:
-                        f = t['attrs']['type']
-                        v = t['attrs']['val']
-                        #debug ("setting %s = %s in %s" %(f,v, pprint.pformat(r)))
-                        r[f]=v
-                    #else:
+#     #         #     if 'type' in t['attrs']:
+#     #         #         if 'val' in t['attrs']:
+#     #         #             f = t['attrs']['type']
+#     #         #             v = t['attrs']['val']
+#     #         #             print ("setting %s = %s in %s" %(f,v, pprint.pformat(r)))
+#     #         #             r[f]=v
+#     #         #         #else:
 
-                        #raise Exception(
-                        #    pprint.pformat(t['attrs'])
-                        #)
+#     #         #             #raise Exception(
+#     #         #             #    pprint.pformat(t['attrs'])
+#     #         #             #)
 
             
-    #pprint2.pprint({'merged': r})
-    return r
+#     # #pprint2.pprint({'merged': r})
+#     # return r

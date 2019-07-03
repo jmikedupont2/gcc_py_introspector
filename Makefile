@@ -1,3 +1,12 @@
+
+test:
+	#python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/constructor_lngth_idx_val.tu
+	python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/real_value.tu
+
+linux:
+	python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu
+	# 
+
 imlsof2:
 	PYTHONPATH=~/experiments/gcc_py_introspector/ python3 gcc/tree/runimtest2.py ../lsof
 
@@ -9,7 +18,7 @@ testload2:
 
 identifier:
 	#python3 -mcProfile -s cumulative gcc/tree/reader.py tests/empty.tu
-	PYTHONPATH=~/experiments/gcc_py_introspector/ python3 -m memory_profiler ./test.py tests/identifier.tu
+	PYTHONPATH=~/experiments/gcc_py_introspector/ python3 ./test.py tests/identifier.tu
 
 testemptyfull:
 	#python3 -mcProfile -s cumulative gcc/tree/reader.py tests/empty.tu
