@@ -1,6 +1,9 @@
 """
 Take a file and extract the lines that are sources
 """
+import sys
+import importlib
+from .types import ClassType
 from subgraph import *
 
 
@@ -62,7 +65,8 @@ class SourceGen:
 
         def reference(self):
             self.visitor._print(
-                "Reference to Node: %s %s" % (self.node.node_id(), self.node.typename())
+                "Reference to Node: %s %s" % (
+                    self.node.node_id(), self.node.typename())
             )
             self.emit_reference()
             # self.visit_scalars()
@@ -357,12 +361,7 @@ class SourceGen:
             self.generate()
 
 
-from .types import ClassType
-
-import importlib
-
 # import pprint
-import sys
 
 
 def main(module):

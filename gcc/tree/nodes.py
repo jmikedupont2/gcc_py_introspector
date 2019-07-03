@@ -11,6 +11,8 @@ from gcc.tree.node import Node
 import pprint
 
 # Resolver
+
+
 def testsize(x):
     return
     if x:
@@ -69,8 +71,8 @@ def reference(n, name):
     # Nodes.astack.append([name,n])
     if n not in gcc.tree.nodes.Nodes.nodes:
         gcc.tree.nodes.Nodes.nodes[n] = {
-            #'count':1,
-            #'node' : Node(n),
+            # 'count':1,
+            # 'node' : Node(n),
             "nid": n
         }
     # else:
@@ -97,8 +99,8 @@ def declare(n):
 
     if n not in gcc.tree.nodes.Nodes.nodes:
         gcc.tree.nodes.Nodes.nodes[n] = {
-            #'decl_count':1,
-            #'node': Node(n),
+            # 'decl_count':1,
+            # 'node': Node(n),
             "nid": n
         }
 

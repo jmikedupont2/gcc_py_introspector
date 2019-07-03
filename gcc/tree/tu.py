@@ -138,7 +138,7 @@ def make_tokens(prefix, pattern, val_func, tstr):
     for x in tstr.split():
         item = x.strip().rstrip()
         regex = pattern % item
-        func = lambda x: val_func(x)
+        def func(x): return val_func(x)
         func.regex = regex
         func.node = x
         func.prefix = prefix

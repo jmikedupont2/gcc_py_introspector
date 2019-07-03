@@ -40,14 +40,16 @@ def parser_rule(f):
 
         for x in psr_val.slice[1:]:
             # pprint.pprint(x)
-            debug2("\t\t\tITEM:", i, ":", pformat2(x), "Value:", pformat2(get_value(x)))
+            debug2("\t\t\tITEM:", i, ":", pformat2(
+                x), "Value:", pformat2(get_value(x)))
             # attrs(get_value(x))
 
             i = i + 1
         #         #, pformat(dir(x))
         r = f(psr_val)
         x = psr_val.slice[0]
-        debug2("\t\t\tresult:", i, ":", pformat2(x), "Value:", pformat2(get_value(x)))
+        debug2("\t\t\tresult:", i, ":", pformat2(
+            x), "Value:", pformat2(get_value(x)))
         return r
 
     wrapper.doc = doc
@@ -149,7 +151,8 @@ def token_rule(f):
         # debug(pformat(dir(tok)))
         r = f(tok)
         if r is None:
-            debug4(pformat({"none returned f": f, "doc": doc, "dict": f.__dict__}))
+            debug4(
+                pformat({"none returned f": f, "doc": doc, "dict": f.__dict__}))
             # raise Exception("None")
         debug({"ret:": r})
         return r
@@ -236,7 +239,7 @@ def parser_simple_rule(f):
 
         psr_val[0] = Rule(
             **{
-                #'node_type' : f.__name__,
+                # 'node_type' : f.__name__,
                 field_name.value: field_value.value
             }
         )
@@ -282,7 +285,8 @@ def parser_simple_rule_node(f):
         #     else:
         #         types[node_type]=types[node_type]+1
 
-        psr_val[0] = Rule(**{field_name.value: field_value})  #'node_type' : f.__name__,
+        # 'node_type' : f.__name__,
+        psr_val[0] = Rule(**{field_name.value: field_value})
 
         # field_value.ref(psr_val[0])
 

@@ -1,6 +1,16 @@
 """
 reader
 """
+from gcc.tree.generated_rules2 import *
+from gcc.tree.generated_rules import *
+from gcc.tree.tu_attrs import *
+import gcc.tree.nodes
+from gcc.tree.utils import goto_initial, create_list  # , merge_list
+import gcc.tree.tuast  # import Link
+from gcc.tree.tu import tokens
+import ply.yacc as yacc  # Get the token map from the lexer.  This is required.
+import gcc.tree.pprint2
+import pprint
 from gcc.tree.attributes import parser_rule, parser_node_rule, parser_simple_rule
 
 # this first rule is synthetic and matches any nodes
@@ -26,6 +36,8 @@ class List:
 start = "anynode"
 
 # @parser_rule
+
+
 def p_any_node(psr_val):
     "anynode : node "
     # the node declaration
@@ -34,16 +46,7 @@ def p_any_node(psr_val):
     declare_node(psr_val[1])
 
 
-import pprint
-import gcc.tree.pprint2
-
-import ply.yacc as yacc  # Get the token map from the lexer.  This is required.
-from gcc.tree.tu import tokens
-import gcc.tree.tuast  # import Link
-from gcc.tree.utils import goto_initial, create_list  # , merge_list
-
 # the first rule is important
-import gcc.tree.nodes
 
 
 @parser_rule
@@ -91,7 +94,8 @@ def p_node_constructor_vals(psr_val):
 @parser_node_rule
 def p_node_constructor_empty(psr_val):
     "node : NODE NTYPE_CONSTRUCTOR LEN"
-    psr_val[0] = {"__type__": "constructor", "node": psr_val[1], "idx_len": psr_val[3]}
+    psr_val[0] = {"__type__": "constructor",
+                  "node": psr_val[1], "idx_len": psr_val[3]}
 
 
 # pprint.pprint(psr_val[0])
@@ -412,12 +416,12 @@ def p_idx_val_item(psr_val):
     nd2 = gcc.tree.nodes.reference(psr_val[4], "val")
     addr = psr_val[5]
     psr_val[0] = {
-        #'type' : 'idx_val',
-        #'val' : {
-        #'idx':psr_val[1],
-        #'idx_node': nd,
-        #'attrval': psr_val[3],
-        #'val_node': nd2,
+        # 'type' : 'idx_val',
+        # 'val' : {
+        # 'idx':psr_val[1],
+        # 'idx_node': nd,
+        # 'attrval': psr_val[3],
+        # 'val_node': nd2,
         "addr": addr,
         # }
     }
@@ -437,8 +441,8 @@ def p_val_item2(psr_val):
     nd = gcc.tree.nodes.reference(psr_val[2], "val")
     val = psr_val[3]
     psr_val[0] = {
-        #'type' : 'val',
-        #'val' : {
+        # 'type' : 'val',
+        # 'val' : {
         "val_node": nd,
         "value": val,
         # }
@@ -450,8 +454,8 @@ def p_val_item(psr_val):
     nd = gcc.tree.nodes.reference(psr_val[2], "val")
     attr = psr_val[3]
     psr_val[0] = {
-        #'type' : 'val',
-        #'val' : {
+        # 'type' : 'val',
+        # 'val' : {
         "idx_node": nd,
         "attr": attr,
         # }
@@ -465,9 +469,9 @@ def p_idx_val_item2(psr_val):
     nd2 = gcc.tree.nodes.reference(psr_val[4], "val")
     alist = psr_val[5]
     psr_val[0] = {
-        #'type' : 'idx_val',
-        #'val' : {
-        #'idx':psr_val[1],
+        # 'type' : 'idx_val',
+        # 'val' : {
+        # 'idx':psr_val[1],
         "idx_node": nd,
         "val_node": nd2,
         "list": alist,
@@ -510,7 +514,7 @@ def p_attr_list3(psr_val):
     # psr_val[0] = {'type_attrs'psr_val[1],psr_val[2]{
     psr_val[0] = List(
         **{
-            #'__type__':'attr_list',
+            # '__type__':'attr_list',
             "attrs": psr_val[1],
             "_list": psr_val[2],
         }
@@ -523,7 +527,7 @@ def p_attr_list(psr_val):
     # pprint.pprint({'psr_val1':psr_val[1]})
     # pprint.pprint({'psr_val2':psr_val[2]})
     psr_val[0] = List(
-        **{"attrs": psr_val[1], "_list": psr_val[2]}  #'__type__':'attr_list',
+        **{"attrs": psr_val[1], "_list": psr_val[2]}  # '__type__':'attr_list',
     ).collapse()
 
 
@@ -540,9 +544,5 @@ def p_error(x):
     print(("error occur %s" % x))
     raise Exception(x)
 
-
-from gcc.tree.tu_attrs import *
-from gcc.tree.generated_rules import *
-from gcc.tree.generated_rules2 import *
 
 parser = yacc.yacc()

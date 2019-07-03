@@ -383,7 +383,8 @@ def pstack(o):
         if s.type == "$end":
             pass
         else:
-            s1 = "[type:%s t2:%s value:%s]," % (s.type, type(s.value), s.value.node_id)
+            s1 = "[type:%s t2:%s value:%s]," % (
+                s.type, type(s.value), s.value.node_id)
             r = r + s1
             # print "Stack",s,pprint2.pformat(s)
             # print "Stack",s,pprint2.pformat(dir(s))

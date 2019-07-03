@@ -31,7 +31,7 @@ class TNode:
         return "!TNode:id='%s',type:'%s'!" % (
             self.node_id.n,
             self.node_type,
-            #'pstack'
+            # 'pstack'
             # self.pstack()
             # pprint2.pformat(self.o.__dict__)
         )

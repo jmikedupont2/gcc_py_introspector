@@ -1,3 +1,5 @@
+import gcc.tree.transform
+import pprint
 import pickle
 
 # class SomeType:
@@ -14,9 +16,7 @@ f = open(sys.argv[1], "rb")
 node_objs = pickle.load(f)
 
 gcc.tree.nodes.Nodes.nodes = node_objs
-import pprint
 
-import gcc.tree.transform
 
 pprint.pprint(node_objs)
 

@@ -624,9 +624,9 @@ def p_attrs_type6(psr_val):
     field_value = gcc.tree.nodes.reference(nd, "type")
     psr_val[0] = Something(
         **{
-            #'type': 'type',
-            #'val': {
-            #'type' : nd,
+            # 'type': 'type',
+            # 'val': {
+            # 'type' : nd,
             "type_name": "int",
             "type_value": psr_val[4]
             # }
@@ -645,9 +645,9 @@ def p_attrs_type3(psr_val):
     nd = gcc.tree.nodes.reference(psr_val[2], "type")
     psr_val[0] = Something(
         **{
-            #'type': 'type',
-            #'val': {
-            #'type': psr_val[2],
+            # 'type': 'type',
+            # 'val': {
+            # 'type': psr_val[2],
             "type_name": "int",
             "type_value": psr_val[4]
             # }
@@ -668,9 +668,9 @@ def p_attrs_type3b(psr_val):
     nd = gcc.tree.nodes.reference(psr_val[2], "type")
     psr_val[0] = Something(
         **{
-            #'type': 'type',
-            #'val' : {
-            #'type': psr_val[2],
+            # 'type': 'type',
+            # 'val' : {
+            # 'type': psr_val[2],
             "type_name": "int",
             "type_value": psr_val[4]
             # }
@@ -691,9 +691,9 @@ def p_attrs_type4b(psr_val):
     nd = gcc.tree.nodes.reference(psr_val[2], "type")
     psr_val[0] = Something(
         **{
-            #'type': 'type',
-            #'val' : {
-            #'type': psr_val[2],
+            # 'type': 'type',
+            # 'val' : {
+            # 'type': psr_val[2],
             "type_name": "int",
             "type_value": psr_val[4]
             # }

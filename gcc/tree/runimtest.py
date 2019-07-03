@@ -1,3 +1,8 @@
+import gcc.tree.tuast
+from threading import Thread
+import time
+import os.path
+import subprocess
 import os
 import sys
 import pickle
@@ -24,14 +29,9 @@ for file in list:
 
 # Sort list of tuples by the first element, size.
 pairs.sort(key=lambda s: s[0])
-import subprocess
-import os.path
 
 
 # Display pairs.
-import time
-from threading import Thread
-import gcc.tree.tuast
 
 all_nodes = {}
 fields = {}

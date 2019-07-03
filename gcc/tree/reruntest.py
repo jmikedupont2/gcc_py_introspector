@@ -1,3 +1,5 @@
+import os.path
+import subprocess
 import os
 import sys
 
@@ -20,8 +22,6 @@ for file in list:
 
 # Sort list of tuples by the first element, size.
 pairs.sort(key=lambda s: s[0])
-import subprocess
-import os.path
 
 
 # Display pairs.
@@ -33,7 +33,8 @@ for pair in pairs:
     if True:
         print(("running test %s" % n))
         print((" ".join(["python3", "reader.py", "%s/%s" % (directory, n)])))
-        x = subprocess.call(["python3", "reader.py", "%s/%s" % (directory, n), "debug"])
+        x = subprocess.call(
+            ["python3", "reader.py", "%s/%s" % (directory, n), "debug"])
         print(("%s %s" % (n, x)))
         # os.unlink('lasterror.txt',"%s/%s.lasterror.txt" % (directory,n))
 
