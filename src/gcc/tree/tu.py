@@ -13,6 +13,7 @@ import gcc.tree.structure
 from gcc.tree.attributes import token_rule
 from gcc.tree.symbol_table import nodes_seen
 from gcc.tree.utils import emit_parser_rule, goto_state
+from gcc.tree.ast import *
 
 DEBUG = 0
 
@@ -31,7 +32,7 @@ def create_operator(x):
 
 
 tokens = [
-    "LEN",
+    "CLEN",
     "SPEC_REGISTER",
     "ATTR_ALGN",
     "ATTR_SIGN",
@@ -46,7 +47,7 @@ tokens = [
     "ADDR_EXPR",
     "SPEC_ATTR",
     "SPEC_VALU",
-    "CONSTRUCTOR",
+    "CONSTRUCTOR", # for note
     "QUAL",
     "PSEUDO",
     "TMPL",
@@ -203,7 +204,7 @@ t_PSEUDO = "pseudo"
 t_TMPL = "tmpl"
 # t_DTYPE = 'long|int'
 
-# can be used as a node type or a note
+# can be used as a  note
 t_CONSTRUCTOR = "constructor"
 
 
@@ -220,8 +221,11 @@ def t_STRG(tok):
 
 
 @token_rule
-def t_LEN(tok):  # constructor length
+def t_CLEN(tok):  # constructor length
     r"lngt:\s*(?P<len>\d+)"  # (?P<len>\d+)
+    val = tok.lexer.lexmatch.group("len")
+    tok.value = SomeLen(int(val))
+
     return tok
 
 

@@ -23,7 +23,7 @@ class IntegerCst:
     def to_dict(self):
         #pprint.pprint(self.__dict__)
         return {
-            'type_node':self.type_node.to_dict(),
+            'type':self.type_node.to_dict()['type'],
             'value':self.value
         }
         return self.__dict__
@@ -76,6 +76,17 @@ class List:
         #pprint.pprint({'attr': attrs, 'alist':_list})
         self.attrs = attrs
         self._list = list
+    def to_list(self):
+        ret = []
+        self.attrs.append_list(ret)
+        self._list.append_list(ret)
+        return ret
+
+    def to_dict(self):
+        values = {}
+        for x in self.to_list():
+            values.update(x)
+        return values
 
 
 class Add:
@@ -128,7 +139,12 @@ class ConstructorListChain:
 
         self.head.append_list(alist)
         self.tail.append_list(alist)
-        
+    def to_dict(self):
+        values = {}
+        for x in self.to_list():
+            values.update(x)
+        return values
+
 class BitField(Leaf):
     pass
 
@@ -136,6 +152,8 @@ class NodeRef(Leaf):
     def __init__(self, node, name):
         self.node = node
         self.name = name
+    def to_dict(self):
+        return { self.name : self.node }
 
 class AttrList:
     def __init__(self, attr, _list=None):
@@ -153,7 +171,11 @@ class AttrList:
             self._list.append_list(ret)
         return ret
     def to_dict(self):
-        return self.to_list()
+        values = {}
+        for x in self.to_list():
+            values.update(x)
+        return values
+
 
 class List:
     def __init__(self, attr, _list):
@@ -166,7 +188,12 @@ class List:
         self._list.append_list(ret)
         return ret
     def to_dict(self):
-        return self.to_list()
+        #return { 'somelist' : self.to_list() }
+        values = {}
+        for x in self.to_list():
+            values.update(x)
+        return values
+
     def append_list(self, alist):
         #import pdb
         #pdb.set_trace()
@@ -182,3 +209,11 @@ class List:
         self.attr.append_list(alist)
         if self._list:
             self._list.append_list(alist)
+class SomeLen(Leaf):
+    def __init__(self, va):
+        self.va = va
+class ConstructorList2(Leaf):
+    def __init__(self, l):
+        self.l = l
+class FakeConstructor(Leaf):
+    ""

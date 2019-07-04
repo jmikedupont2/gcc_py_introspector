@@ -386,6 +386,12 @@ def p_attr_val(psr_val):
 def p_attr_idx(psr_val):
     "attrs : ATTR_IDX NODE"
 
+def p_attr_clen(psr_val):
+    "attrs : CLEN"
+    field_name = 'len'
+    field_value = psr_val.slice[1].value
+    psr_val[0] = Field(length=field_value)
+
 
 @parser_simple_rule_node
 def p_attr_valu(psr_val):

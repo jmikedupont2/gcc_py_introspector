@@ -8,7 +8,7 @@ def p_ADDR_EXPR_node(psr_val):
 
 @parser_node_rule
 def p_CONSTRUCTOR_node(psr_val):
-    "node : NODE CONSTRUCTOR attr_list"
+    "node : NODE NTYPE_CONSTRUCTOR attr_list"
 
 
 @parser_node_rule
@@ -671,9 +671,9 @@ def p_NTYPE_COMPOUND_LITERAL_EXPR_node(psr_val):
     "node : NODE NTYPE_COMPOUND_LITERAL_EXPR attr_list"
 
 
-@parser_node_rule
-def p_NTYPE_CONSTRUCTOR_node(psr_val):
-    "node : NODE NTYPE_CONSTRUCTOR attr_list"
+# @parser_node_rule
+# def p_NTYPE_CONSTRUCTOR_node(psr_val):
+#     "node : NODE NTYPE_CONSTRUCTOR attr_list"
 
 
 @parser_node_rule

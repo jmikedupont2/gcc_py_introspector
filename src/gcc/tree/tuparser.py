@@ -6,6 +6,7 @@ import ply.yacc as yacc  # Get the token map from the lexer.  This is required.
 
 from gcc.tree.ast import *
 import gcc.tree.nodes
+import gcc.tree.pprint2
 import gcc.tree.tuast  # import Link
 from gcc.tree.attributes import (
     parser_node_rule,
@@ -36,6 +37,18 @@ def p_any_node(psr_val):
 
 # the first rule is important
 
+# @parser_node_rule
+# def p_node_constructor(psr_val):
+#     "node : NODE NTYPE_CONSTRUCTOR CLEN idx_val_list"
+#     print("DEBUG LEN" , psr_val[3])
+#     psr_val[0] = "GOOBAR"
+#     #psr_val[0] = FakeConstructor()
+#     # psr_val[0] = ConstructorList(
+#     #     node=NodeRef(psr_val[1],'node'),
+#     #     llen=SomeLen(psr_val[3]),
+#     #     llist=ConstructorList2(psr_val[4]),
+#     #     )
+
 
 @parser_rule
 def p_node_id(psr_val):
@@ -51,39 +64,31 @@ def p_node_id(psr_val):
     goto_initial(psr_val)  # begin the string group
 
 
-@parser_node_rule
-def p_node_constructor(psr_val):
-    "node : NODE NTYPE_CONSTRUCTOR LEN idx_val_list"
-    psr_val[0] = ConstructorList(
-        node=psr_val[1],
-        llen=psr_val[3],
-        llist=psr_val[4],
-        )
 
 
-@parser_node_rule
-def p_node_constructor_vals(psr_val):
-    "node : NODE NTYPE_CONSTRUCTOR LEN val_list"
-    psr_val[0] = gcc.tree.ast.Something(
-        **{
-            "__type__": "constructor",
-            "node": psr_val[1],
-            "idx_len": psr_val[3],
-            "idx_list": psr_val[4],
-        }
-    )
+# @parser_node_rule
+# def p_node_constructor_vals(psr_val):
+#     "node : NODE NTYPE_CONSTRUCTOR LEN val_list"
+#     psr_val[0] = gcc.tree.ast.Something(
+#         **{
+#             "__type__": "constructor",
+#             "node": psr_val[1],
+#             "idx_len": psr_val[3],
+#             "idx_list": psr_val[4],
+#         }
+#     )
 
 
-@parser_node_rule
-def p_node_constructor_empty(psr_val):
-    "node : NODE NTYPE_CONSTRUCTOR LEN"
-    psr_val[0] = gcc.tree.ast.Something(
-        **{
-            "__type__": "constructor",
-            "node": psr_val[1],
-            "idx_len": psr_val[3],
-        }
-    )
+# @parser_node_rule
+# def p_node_constructor_empty(psr_val):
+#     "node : NODE NTYPE_CONSTRUCTOR LEN"
+#     psr_val[0] = gcc.tree.ast.Something(
+#         **{
+#             "__type__": "constructor",
+#             "node": psr_val[1],
+#             "idx_len": SomeLenpsr_val[3],
+#         }
+#     )
 
 
 ##########################################
@@ -422,18 +427,18 @@ def p_idx_val_short(psr_val):
     psr_val[0] = ConstructorItem(idx=nd, val=nd2)
 
 
-def p_val_item2(psr_val):
-    "val_list : ATTR_VAL NODE val_list"
-    nd = NodeRef(psr_val[2], "val")
-    val = psr_val[3]
-    psr_val[0] = gcc.tree.ast.Something(**{"val_node": nd, "value": val})
+# def p_val_item2(psr_val):
+#     "val_list : ATTR_VAL NODE val_list"
+#     nd = NodeRef(psr_val[2], "val")
+#     val = psr_val[3]
+#     psr_val[0] = gcc.tree.ast.Something(**{"val_node": nd, "value": val})
 
 
-def p_val_item(psr_val):
-    "val_list : ATTR_VAL NODE attr_list"
-    nd = NodeRef(psr_val[2], "val")
-    attr = psr_val[3]
-    psr_val[0] = gcc.tree.ast.Something(**{"idx_node": nd, "attr": attr})
+# def p_val_item(psr_val):
+#     "val_list : ATTR_VAL NODE attr_list"
+#     nd = NodeRef(psr_val[2], "val")
+#     attr = psr_val[3]
+#     psr_val[0] = gcc.tree.ast.Something(**{"idx_node": nd, "attr": attr})
 
 
 # @parser_rule
@@ -441,7 +446,7 @@ def p_idx_val_item2(psr_val):
     "idx_val_list : ATTR_IDX NODE ATTR_VAL NODE idx_val_list"
     nd = NodeRef(psr_val[2], "idx")
     nd2 = NodeRef(psr_val[4], "val")
-    alist = psr_val[5]
+    alist = List(psr_val[5])
     psr_val[0] = ConstructorListChain(ConstructorItem(idx=nd, val=nd2),alist)
 
 

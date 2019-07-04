@@ -12,9 +12,10 @@ class NodeDecl:
         if value:
             #pprint.pprint({"LEftovers":[value]})
             #raise Exception()
-            self._values = []
+            #self._values = {}
             for x in value:
-                self._values.append(x.to_dict())
+                #pprint.pprint({"LEftover":x})
+                self.__dict__.update(x.to_dict())
 
     def to_json(self):
         
@@ -24,14 +25,15 @@ class NodeDecl:
 
         try: 
             j = (json.dumps(self.__dict__))
+            print (j) # emit json
         except Exception as e:
             pprint.pprint(self.__dict__)        
 
 class TypeDecl(NodeDecl):
     "type_decl"
-    def __init__(self, _id, _type, value):
-        NodeDecl.__init__(self, _id, _type, value = None)
-        self._list = value[0].to_list()
+    # def __init__(self, _id, _type, value):
+    #     NodeDecl.__init__(self, _id, _type, value = None)
+    #     self._list = value[0].to_list()
 
 
 class IdentifierNode(NodeDecl):
@@ -575,9 +577,9 @@ class FloatExpr(NodeDecl):
 
 class Constructor(NodeDecl):
     """constructor"""
-    def __init__(self, _id, _type, value):
-        NodeDecl.__init__(self, _id, _type, value = None)
-        self._list = value[1].to_list()
+    # def __init__(self, _id, _type, value):
+    #     NodeDecl.__init__(self, _id, _type, value = None)
+    #     self._list = value[1].to_list()
 
 
 class CompoundLiteralExpr(NodeDecl):

@@ -228,6 +228,7 @@ class Float(Value):
 
 class String(Value):
     def __init__(self, v):
+        print("String", v)
         Value.__init__(self, v)
 
     @property
@@ -243,11 +244,12 @@ class String(Value):
 
 class String2(Value):
     def __init__(self, v):
-        m = re.match(r"(.*)lngt: (\d+)\s+addr:\s+([a-h0-9]+)$", v)
+        # print("String2", v)
+        m = re.match(r"(?P<value>.*)lngt: (?P<len>\d+)$", v)
         if m:
-            l = int(m.group(2))
+            l = int(m.group('len'))
             v2 = v[0:l]
-            self.addr = m.group(3)
+            self.addr = m.group('value')
             Value.__init__(self, v2)
         else:
             Value.__init__(self, v)

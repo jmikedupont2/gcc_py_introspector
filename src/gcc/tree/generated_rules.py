@@ -36,9 +36,9 @@ def p_NTYPE_REFERENCE_TYPE_node(psr_val):
     "node : NODE NTYPE_REFERENCE_TYPE  attr_list"
 
 
-@parser_node_rule
-def p_CONSTRUCTOR_node(psr_val):
-    "node : NODE CONSTRUCTOR  attr_list"
+# @parser_node_rule
+# def p_CONSTRUCTOR_node(psr_val):
+#     "node : NODE CONSTRUCTOR  attr_list"
 
 
 @parser_node_rule
