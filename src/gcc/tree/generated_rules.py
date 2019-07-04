@@ -166,169 +166,161 @@ def p_NTYPE_RECORD_TYPE_node(psr_val):
     "node : NODE NTYPE_RECORD_TYPE  attr_list"
 
 
-@parser_node_rule
-def p_NTYPE_POSTINCREMENT_EXPR_node(psr_val):
-    "node : NODE NTYPE_POSTINCREMENT_EXPR TYPE_ATTR NODE OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_POSTINCREMENT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_POSTINCREMENT_EXPR TYPE_ATTR NODE OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_COMPOUND_EXPR_node(psr_val):
-    "node : NODE NTYPE_COMPOUND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_COMPOUND_EXPR_node(psr_val):
+#     "node : NODE NTYPE_COMPOUND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_MODIFY_EXPR_node(psr_val):
-    "node : NODE NTYPE_MODIFY_EXPR TYPE_ATTR NODE OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_MODIFY_EXPR_node(psr_val):
+#     "node : NODE NTYPE_MODIFY_EXPR TYPE_ATTR NODE OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_MULT_EXPR_node(psr_val):
-    "node : NODE NTYPE_MULT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_MULT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_MULT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_NE_EXPR_node(psr_val):
-    "node : NODE NTYPE_NE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_NE_EXPR_node(psr_val):
+#     "node : NODE NTYPE_NE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_GE_EXPR_node(psr_val):
-    "node : NODE NTYPE_GE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_GE_EXPR_node(psr_val):
+#     "node : NODE NTYPE_GE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_TRUNC_DIV_EXPR_node(psr_val):
-    "node : NODE NTYPE_TRUNC_DIV_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_TRUNC_DIV_EXPR_node(psr_val):
+#     "node : NODE NTYPE_TRUNC_DIV_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_GT_EXPR_node(psr_val):
-    "node : NODE NTYPE_GT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_GT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_GT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_PREINCREMENT_EXPR_node(psr_val):
-    "node : NODE NTYPE_PREINCREMENT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_PREINCREMENT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_PREINCREMENT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_ARRAY_REF_node(psr_val):
-    "node : NODE NTYPE_ARRAY_REF TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_ARRAY_REF_node(psr_val):
+#     "node : NODE NTYPE_ARRAY_REF TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_BIT_AND_EXPR_node(psr_val):
-    "node : NODE NTYPE_BIT_AND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_BIT_AND_EXPR_node(psr_val):
+#     "node : NODE NTYPE_BIT_AND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_MINUS_EXPR_node(psr_val):
-    "node : NODE NTYPE_MINUS_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_MINUS_EXPR_node(psr_val):
+#     "node : NODE NTYPE_MINUS_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_RSHIFT_EXPR_node(psr_val):
-    "node : NODE NTYPE_RSHIFT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_RSHIFT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_RSHIFT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_POINTER_PLUS_EXPR_node(psr_val):
-    "node : NODE NTYPE_POINTER_PLUS_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_POINTER_PLUS_EXPR_node(psr_val):
+#     "node : NODE NTYPE_POINTER_PLUS_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_PLUS_EXPR_node(psr_val):
-    "node : NODE NTYPE_PLUS_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_PLUS_EXPR_node(psr_val):
+#     "node : NODE NTYPE_PLUS_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_TRUTH_ORIF_EXPR_node(psr_val):
-    "node : NODE NTYPE_TRUTH_ORIF_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_TRUTH_ORIF_EXPR_node(psr_val):
+#     "node : NODE NTYPE_TRUTH_ORIF_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_EQ_EXPR_node(psr_val):
-    "node : NODE NTYPE_EQ_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_EQ_EXPR_node(psr_val):
+#     "node : NODE NTYPE_EQ_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_TRUTH_ANDIF_EXPR_node(psr_val):
-    "node : NODE NTYPE_TRUTH_ANDIF_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_TRUTH_ANDIF_EXPR_node(psr_val):
+#     "node : NODE NTYPE_TRUTH_ANDIF_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_BIT_IOR_EXPR_node(psr_val):
-    "node : NODE NTYPE_BIT_IOR_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_BIT_IOR_EXPR_node(psr_val):
+#     "node : NODE NTYPE_BIT_IOR_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
 
-@parser_node_rule
-def p_NTYPE_LSHIFT_EXPR_node(psr_val):
-    "node : NODE NTYPE_LSHIFT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_LSHIFT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_LSHIFT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_COND_EXPR2_node(psr_val):
+#     """
+#     node : NODE NTYPE_COND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE OP2_ATTR NODE
+#     node : NODE NTYPE_COND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE
+#     """
 
-@parser_node_rule
-def p_NTYPE_COND_EXPR_node(psr_val):
-    "node : NODE NTYPE_COND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE OP2_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_LT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_LT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_COND_EXPR2_node(psr_val):
-    "node : NODE NTYPE_COND_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_LE_EXPR_node(psr_val):
+#     "node : NODE NTYPE_LE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_COMPONENT_REF_node(psr_val):
-    "node : NODE NTYPE_COMPONENT_REF TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_NEGATE_EXPR_node(psr_val):
+#     "node : NODE NTYPE_NEGATE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_LT_EXPR_node(psr_val):
-    "node : NODE NTYPE_LT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_BIT_NOT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_BIT_NOT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_LE_EXPR_node(psr_val):
-    "node : NODE NTYPE_LE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_INDIRECT_REF_node(psr_val):
+#     "node : NODE NTYPE_INDIRECT_REF TYPE_ATTR NODE  OP0_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_NEGATE_EXPR_node(psr_val):
-    "node : NODE NTYPE_NEGATE_EXPR TYPE_ATTR NODE  OP0_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_BIT_FIELD_REF_node(psr_val):
+#     "node : NODE NTYPE_BIT_FIELD_REF TYPE_ATTR NODE  OP0_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_BIT_NOT_EXPR_node(psr_val):
-    "node : NODE NTYPE_BIT_NOT_EXPR TYPE_ATTR NODE  OP0_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_BIT_FIELD_REF2_node(psr_val):
+#     "node : NODE NTYPE_BIT_FIELD_REF TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE OP2_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_INDIRECT_REF_node(psr_val):
-    "node : NODE NTYPE_INDIRECT_REF TYPE_ATTR NODE  OP0_ATTR NODE"
 
+# @parser_node_rule
+# def p_ADDR_EXPR_node(psr_val):
+#     "node : NODE ADDR_EXPR TYPE_ATTR NODE OP0_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_BIT_FIELD_REF_node(psr_val):
-    "node : NODE NTYPE_BIT_FIELD_REF TYPE_ATTR NODE  OP0_ATTR NODE"
 
+# @parser_node_rule
+# def p_NTYPE_NOP_EXPR_node(psr_val):
+#     "node : NODE NTYPE_NOP_EXPR TYPE_ATTR NODE OP0_ATTR NODE"
 
-@parser_node_rule
-def p_NTYPE_BIT_FIELD_REF2_node(psr_val):
-    "node : NODE NTYPE_BIT_FIELD_REF TYPE_ATTR NODE  OP0_ATTR NODE OP1_ATTR NODE OP2_ATTR NODE"
 
-
-@parser_node_rule
-def p_ADDR_EXPR_node(psr_val):
-    "node : NODE ADDR_EXPR TYPE_ATTR NODE OP0_ATTR NODE"
-
-
-@parser_node_rule
-def p_NTYPE_NOP_EXPR_node(psr_val):
-    "node : NODE NTYPE_NOP_EXPR TYPE_ATTR NODE OP0_ATTR NODE"
-
-
-@parser_node_rule
-def p_NTYPE_CONVERT_EXPR_node(psr_val):
-    "node : NODE NTYPE_CONVERT_EXPR TYPE_ATTR NODE OP0_ATTR NODE"
+# @parser_node_rule
+# def p_NTYPE_CONVERT_EXPR_node(psr_val):
+#     "node : NODE NTYPE_CONVERT_EXPR TYPE_ATTR NODE OP0_ATTR NODE"
 
 
 @parser_node_rule

@@ -4,20 +4,28 @@ all : $(FILES2)
 	echo done
 
 %.tu.out : %.tu
-	python3.7 -m gcc.tree.reader --debug=True $<  > $@
+	python3.7 -m gcc.tree.reader --debug=True x$<  > $@
 
 test1: $(files)
 	#python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/constructor_lngth_idx_val.tu
 	#	python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/real_value.tu
-	python3.7 -m gcc.tree.reader tests/*.tu --debug=True
+	PYTHONPATH=./src/ python3.7  -m gcc.tree.reader tests/*.tu --debug=True
 
 test:
 	#python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/constructor_lngth_idx_val.tu
 	#	python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/real_value.tu
-	python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu --debug=True
+	# PYTHONPATH=./src/  python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu --debug=True
+	PYTHONPATH=./src/  python3.7 -m gcc.tree.reader  ~/experiments/gcc_py_introspector/lasterror.tu --debug=True
+test_nodebug:
+	#python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/constructor_lngth_idx_val.tu
+	#	python3.7 -m gcc.tree.reader --debug=True ~/experiments/gcc_py_introspector/tests/real_value.tu
+	# PYTHONPATH=./src/  python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu --debug=True
+	PYTHONPATH=./src/  python3.7 -m gcc.tree.reader  ~/experiments/gcc_py_introspector/lasterror.tu 
 
 linux:
-	python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu
+	PYTHONPATH=./src/ python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu
+linux_debug:
+	PYTHONPATH=./src/ python3.7 -m gcc.tree.reader ~/experiments/linux/tools/perf/util/header.c.001t.tu --debug=True
 	# 
 
 imlsof2:
@@ -195,4 +203,4 @@ test100:
 	python3 gcc/tree/reader.py tests/test100.tu
 
 test102:
-	python3 gcc/tree/reader.py tests/test102.tu
+	python3 

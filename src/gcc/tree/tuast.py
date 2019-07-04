@@ -1,5 +1,5 @@
 import re
-
+import pprint
 import gcc.tree.attributes
 
 # from attributes import node_type
@@ -128,6 +128,11 @@ class Value(object):
 
     def values(self):
         return self.val
+    def to_dict(self):
+        #pprint.pprint(self.__dict__)
+        return self.__dict__
+    def append_list(self, alist):
+        alist.append(self.to_dict())
 
 
 class Link(Value):
@@ -259,7 +264,9 @@ class String2(Value):
 
     def __repr__(self):
         return "'%s'" % (self.val)
-
+    
+    def to_string(self):
+        return self.val
 
 class Note(Value):
     def __init__(self, v):

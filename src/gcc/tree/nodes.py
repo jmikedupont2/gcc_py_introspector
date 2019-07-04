@@ -7,6 +7,7 @@ import ply.lex as lex
 import gcc
 import gcc.tree.transform
 import gcc.tree.tuast
+from gcc.tree.ast import *
 from gcc.tree.debug import debug
 from gcc.tree.node import Node
 from gcc.tree.pprint2 import pformat, pformat2
@@ -39,7 +40,7 @@ class Nodes:
     @staticmethod
     def usedby(nid, x, n):
 
-        d = gcc.tree.nodes.Nodes.nodes[nid]
+        # d = gcc.tree.nodes.Nodes.nodes[nid]
         # if 'refs' in d:
         #     d['refs'].append([x,n])
         # else:
@@ -54,10 +55,11 @@ class Nodes:
     #     else:
     #         debug({"cannot find": x, "nodes": gcc.tree.nodes.Nodes.nodes})
     #         raise Exception(x)
-
+        ""
 
 def reference(n, name):
-    debug(Nodes.nodes)
+    return NodeRef(n, name)
+
     # global stack
     # global Nodes.astack
     # global nodes
@@ -70,12 +72,12 @@ def reference(n, name):
         name = name.value
     gcc.tree.nodes.Nodes.aobj2[name] = n
     # Nodes.astack.append([name,n])
-    if n not in gcc.tree.nodes.Nodes.nodes:
-        gcc.tree.nodes.Nodes.nodes[n] = {
-            # 'count':1,
-            # 'node' : Node(n),
-            "nid": n
-        }
+    # if n not in gcc.tree.nodes.Nodes.nodes:
+    #     gcc.tree.nodes.Nodes.nodes[n] = {
+    #         # 'count':1,
+    #         # 'node' : Node(n),
+    #         "nid": n
+    #     }
     # else:
     # if 'count' in  gcc.tree.nodes.Nodes.nodes[n]:
     #    gcc.tree.nodes.Nodes.nodes[n]['count'] = gcc.tree.nodes.Nodes.nodes[n]['count'] +1
@@ -91,36 +93,13 @@ def reference(n, name):
 
 
 def declare(n):
-    # pickle.dumps(n)
-    # global Nodes.nodes
-    # debug(Nodes.nodes)
     if not isinstance(n, str):
         n = n.value
-    debug("decl %s" % pformat(n))
-
-    if n not in gcc.tree.nodes.Nodes.nodes:
-        gcc.tree.nodes.Nodes.nodes[n] = {
-            # 'decl_count':1,
-            # 'node': Node(n),
-            "nid": n
-        }
-
-    else:
-        # if 'decl_count' in gcc.tree.nodes.Nodes.nodes[n] :
-        #     debug(Nodes.nodes[n]['decl_count'])
-        #     #raise Exception("Duplicate Decl %s" %n)
-        #     gcc.tree.nodes.Nodes.nodes[n]['decl_count'] = n
-        # else:
-        #     gcc.tree.nodes.Nodes.nodes[n]['decl_count'] = 1
-        pass
-    # n2 = gcc.tree.transform.Resolver.transform(n)
-    # testsize(n2)
-    # testsize(gcc.tree.nodes.Nodes.nodes)
-
     return n
 
 
 def statement(x):
+    return
     # debug(Nodes.nodes)
     debug("statement %s" % pformat2(x))
     # pickle.dumps(x)
@@ -170,6 +149,7 @@ def statement(x):
 
 
 def attrs(v):
+    return
     if type(v) == str:
         raise Exception(v)
         # v = {'unkown': v}
@@ -184,6 +164,7 @@ def attrs(v):
 
 
 def report():
+    return
     print("Nodes.Nodes Report:")
     # b = pickledb.load('Nodes.nodes.db', False)
     f = open("Nodes.nodes.pickle", "wb")

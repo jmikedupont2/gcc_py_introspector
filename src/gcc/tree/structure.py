@@ -7,12 +7,12 @@ import gcc.tree.types
 
 def generate_class(anode_type):
     new_name = "".join([a.title() for a in anode_type.split("_")])
-    c = '\n\nclass {}(NodeDecl):\n    """{}"""\n'.format(new_name, anode_type)
-    if not hasattr(gcc.tree.types, new_name):
-        with open("classes.txt", "a") as fo:
-            fo.write(c + "\n")
-            # print(c)
-            # setattr(gcc.tree.types, new_name, eval(c))
+    #c = '\n\nclass {}(NodeDecl):\n    """{}"""\n'.format(new_name, anode_type)
+    # if not hasattr(gcc.tree.types, new_name):
+    #     with open("classes.txt", "a") as fo:
+    #         fo.write(c + "\n")
+    #         # print(c)
+    #         # setattr(gcc.tree.types, new_name, eval(c))
     # return None
     # else:
     return getattr(gcc.tree.types, new_name)

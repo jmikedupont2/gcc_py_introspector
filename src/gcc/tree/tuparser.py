@@ -1,13 +1,11 @@
 """
 reader
 """
-import pprint
 
 import ply.yacc as yacc  # Get the token map from the lexer.  This is required.
 
-import gcc.tree.ast  # import Link
+from gcc.tree.ast import *
 import gcc.tree.nodes
-import gcc.tree.pprint2
 import gcc.tree.tuast  # import Link
 from gcc.tree.attributes import (
     parser_node_rule,
@@ -23,23 +21,6 @@ from gcc.tree.tu import tokens
 from gcc.tree.tu_attrs import *
 from gcc.tree.utils import create_list, goto_initial  # , merge_list
 
-
-class StringAttrs:
-    def __init__(self, strattrs, alist=None):
-        self.string = strattrs
-        self._list = alist
-
-
-class List:
-    def __init__(self, attrs, _list):
-        self.attrs = attrs
-        self._list = list
-
-    def collapse(self):
-        # todo
-        ""
-
-
 start = "anynode"
 
 # @parser_rule
@@ -47,10 +28,10 @@ start = "anynode"
 
 def p_any_node(psr_val):
     "anynode : node "
-    # the node declaration
-    psr_val[0] = gcc.tree.ast.Something(node=psr_val[1])
+    # the node declaration, top level
+    psr_val[0] = psr_val[1].finished()
 
-    declare_node(psr_val[1])
+    #declare_node(psr_val[1])
 
 
 # the first rule is important
@@ -73,14 +54,11 @@ def p_node_id(psr_val):
 @parser_node_rule
 def p_node_constructor(psr_val):
     "node : NODE NTYPE_CONSTRUCTOR LEN idx_val_list"
-    psr_val[0] = gcc.tree.ast.Something(
-        **{
-            "__type__": "constructor",
-            "node": psr_val[1],
-            "idx_len": psr_val[3],
-            "idx_list": psr_val[4],
-        }
-    )
+    psr_val[0] = ConstructorList(
+        node=psr_val[1],
+        llen=psr_val[3],
+        llist=psr_val[4],
+        )
 
 
 @parser_node_rule
@@ -418,8 +396,8 @@ def p_operator_subs(psr_val):
 # @parser_rule
 def p_idx_val_item(psr_val):
     "idx_val_list : ATTR_IDX NODE ATTR_VAL NODE attr_list"
-    nd = gcc.tree.nodes.reference(psr_val[2], "idx")
-    nd2 = gcc.tree.nodes.reference(psr_val[4], "val")
+    nd = NodeRef(psr_val[2], "idx")
+    nd2 = NodeRef(psr_val[4], "val")
     addr = psr_val[5]
     psr_val[0] = gcc.tree.ast.Something(
         **{
@@ -439,21 +417,21 @@ def p_idx_val_item(psr_val):
 
 def p_idx_val_short(psr_val):
     "idx_val_list : ATTR_IDX NODE ATTR_VAL NODE"
-    nd = gcc.tree.nodes.reference(psr_val[2], "idx")
-    nd2 = gcc.tree.nodes.reference(psr_val[4], "val")
-    psr_val[0] = gcc.tree.ast.Something(**{"idx": nd, "val": nd2})
+    nd = NodeRef(psr_val[2],'idx')
+    nd2 = NodeRef(psr_val[4],'val')
+    psr_val[0] = ConstructorItem(idx=nd, val=nd2)
 
 
 def p_val_item2(psr_val):
     "val_list : ATTR_VAL NODE val_list"
-    nd = gcc.tree.nodes.reference(psr_val[2], "val")
+    nd = NodeRef(psr_val[2], "val")
     val = psr_val[3]
     psr_val[0] = gcc.tree.ast.Something(**{"val_node": nd, "value": val})
 
 
 def p_val_item(psr_val):
     "val_list : ATTR_VAL NODE attr_list"
-    nd = gcc.tree.nodes.reference(psr_val[2], "val")
+    nd = NodeRef(psr_val[2], "val")
     attr = psr_val[3]
     psr_val[0] = gcc.tree.ast.Something(**{"idx_node": nd, "attr": attr})
 
@@ -461,12 +439,11 @@ def p_val_item(psr_val):
 # @parser_rule
 def p_idx_val_item2(psr_val):
     "idx_val_list : ATTR_IDX NODE ATTR_VAL NODE idx_val_list"
-    nd = gcc.tree.nodes.reference(psr_val[2], "idx")
-    nd2 = gcc.tree.nodes.reference(psr_val[4], "val")
+    nd = NodeRef(psr_val[2], "idx")
+    nd2 = NodeRef(psr_val[4], "val")
     alist = psr_val[5]
-    psr_val[0] = gcc.tree.ast.Something(
-        **{"idx_node": nd, "val_node": nd2, "list": alist}
-    )
+    psr_val[0] = ConstructorListChain(ConstructorItem(idx=nd, val=nd2),alist)
+
 
 
 @parser_rule
@@ -498,43 +475,26 @@ def p_attr_list_end(psr_val):
 # @parser_rule
 def p_attr_lista(psr_val):
     "attr_list : attrs"
-    psr_val[0] = psr_val[1]
+    psr_val[0] = AttrList(attr=psr_val[1])
 
 
 # @parser_rule
 def p_attr_list3(psr_val):
     "attr_list : type_attrs attr_list"
 
-    psr_val[0] = List(
-        **{
-            # '__type__':'attr_list',
-            "attrs": psr_val[1],
-            "_list": psr_val[2],
-        }
-    ).collapse()
+    psr_val[0] = AttrList(attr=psr_val[1],
+                          _list=psr_val[2])
 
 
 def p_attr_list(psr_val):
     "attr_list : attrs attr_list"
-    # pprint.pprint({'psr_val':psr_val.slice})
-    # pprint.pprint({'psr_val1':psr_val[1]})
-    # pprint.pprint({'psr_val2':psr_val[2]})
-    psr_val[0] = List(
-        **{
-            "attrs": psr_val[1],
-            "_list": psr_val[2],
-        }  # '__type__':'attr_list',
-    ).collapse()
+    psr_val[0] = List(attr=psr_val[1],_list=psr_val[2])
 
 
 # @parser_rule
 def p_attr_list3a(psr_val):
     "attr_list : type_attrs"
-    # pprint.pprint({'psr_val':psr_val.slice})
-    # pprint.pprint({'psr_val1':psr_val[1]})
-
     psr_val[0] = psr_val[1]
-
 
 def p_error(x):
     print(("error occur %s" % x))

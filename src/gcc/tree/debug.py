@@ -1,49 +1,32 @@
 import pprint
-
-# import traceback
+import traceback
 
 
 def dfilter(x):
-    pass
+    pprint.pprint(x)
 
 
 def stk():
-    return
-    # return traceback.format_stack()[-3:-2]
+    return traceback.format_stack()[-3:-2]
 
 
 def debug(*args, **kvargs):
-    return
     dfilter({"debug": "one", "args": args, "kvargs": kvargs, "stack": stk()})
-    pass
-
 
 def debug2(*args, **kvargs):
-    return
     dfilter({"debug": "two", "args": args, "kvargs": kvargs, "stack": stk()})
-    pass
-
 
 def debug4(*args, **kvargs):
-    return
     dfilter({"debug": "four", "args": args, "kvargs": kvargs, "stack": stk()})
-    pass
-
 
 def pprintpprint(x):
-    return
     dfilter({"debug": "pprintpprint", "args": x, "stack": stk()})
-    pass
 
 
 def debug3(x):
-    return
     dfilter({"debug": "debug3", "args": x, "stack": stk()})
-    pass
-
 
 def debug_ast(psr_val):
-    return
     print(("final attrs %s" % dir(psr_val)))
     print(("doc %s" % psr_val.__doc__))
     # psr_val.__getitem__

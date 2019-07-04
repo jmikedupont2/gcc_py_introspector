@@ -62,12 +62,12 @@ def report_stack(psr_val):
 
 
 def goto_state(p, v):
-    # print "going to state %s" % v
+    #print ("going to state %s" % v)
     p.lexer.begin(v)  # begin the string group
 
 
 def goto_initial(p):
-    # print 'begin initial'
+    #print ('begin initial')
     # raise Exception('where')
     goto_state(p, "INITIAL")  # begin the string group
 

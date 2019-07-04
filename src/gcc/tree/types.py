@@ -5,21 +5,40 @@ import pprint
 class NodeDecl:
     """A node is declared in the tu file for the first time with an id and a node type"""
 
-    def __init__(self, _id, _type, value):
+    def __init__(self, _id, _type, value=None):
         self._id = _id
         self._type = _type
 
-    def to_json(self):
-        #print((json.dumps(self.__dict__)))
-        pass
+        if value:
+            #pprint.pprint({"LEftovers":[value]})
+            #raise Exception()
+            self._values = []
+            for x in value:
+                self._values.append(x.to_dict())
 
+    def to_json(self):
+        
+        pass
+    def finished(self):
+        """Called when this object is finally parsed"""
+
+        try: 
+            j = (json.dumps(self.__dict__))
+        except Exception as e:
+            pprint.pprint(self.__dict__)        
 
 class TypeDecl(NodeDecl):
     "type_decl"
+    def __init__(self, _id, _type, value):
+        NodeDecl.__init__(self, _id, _type, value = None)
+        self._list = value[0].to_list()
 
 
 class IdentifierNode(NodeDecl):
     """identifier_node"""
+    def __init__(self, _id, _type, value):
+        NodeDecl.__init__(self, _id, _type, value = None)
+        self._string = value[0].to_string()
 
 
 class IntegerType(NodeDecl):
@@ -556,6 +575,9 @@ class FloatExpr(NodeDecl):
 
 class Constructor(NodeDecl):
     """constructor"""
+    def __init__(self, _id, _type, value):
+        NodeDecl.__init__(self, _id, _type, value = None)
+        self._list = value[1].to_list()
 
 
 class CompoundLiteralExpr(NodeDecl):

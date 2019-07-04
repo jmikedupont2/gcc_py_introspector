@@ -222,8 +222,6 @@ def t_STRG(tok):
 @token_rule
 def t_LEN(tok):  # constructor length
     r"lngt:\s*(?P<len>\d+)"  # (?P<len>\d+)
-    # goto_state(tok,'len')  # begin the string group
-    # print('constructor lngt: "{}"'.format( tok.lexer.lexmatch.group("len")))
     return tok
 
 
@@ -298,8 +296,6 @@ def t_OP2_ATTR(tok):
 @token_rule
 def t_ADDR_ATTR(tok):
     r"addr\s*:\s*"
-    # tok.value = 'addr'
-    # print("entering ADDR_ATTR:%s" % tok.value)
     goto_state(tok, "adr")  # begin the string group
     return tok
 
@@ -325,7 +321,7 @@ def t_ATTR_OP(tok):
 def t_ATTR_PREC(tok):
     r"prec\s*:\s*"
     tok.value = "prec"
-    # print("entering ADDR_PREC:%s" % tok.value)
+    #print("entering ADDR_PREC:%s" % tok.value)
     goto_state(tok, "prec")  # begin the string group
     return tok
 
@@ -347,19 +343,17 @@ def t_ATTR_SIGN(tok):
     goto_state(tok, "sign")
     return tok
 
+# @token_rule
+# def t_SIGNED(tok):
+#     r"signed|unsigned"
+#     # print 'found signed'
+#     goto_state(tok, "INITIAL")  # end the capture
+#     return tok
 
 @token_rule
 def t_sign_SIGNED(tok):
-    r"signed"  # |unsigned
-    # print 'found signed'
-    goto_state(tok, "INITIAL")  # end the capture
-    return tok
-
-
-@token_rule
-def t_SIGNED(tok):
     r"signed|unsigned"
-    # print 'found signed'
+    # print ('found signed in sign state')
     goto_state(tok, "INITIAL")  # end the capture
     return tok
 
@@ -511,12 +505,30 @@ def t_str_SOMESTRG(tok):
 
 
 @token_rule
-def t_prec_algn_len_SOMEINT(tok):
+def t_algn_SOMEINT(tok):
     r"(?P<val>\d+)\s*"  # some int
     strval = tok.lexer.lexmatch.group("val")
     # print "INT: '%s'" % strval
-    # tok.value = strval
-    # tok.value = "SOMEINT"
+    tok.value = int(strval)
+    goto_state(tok, "INITIAL")
+    return tok
+
+@token_rule
+def t_len_SOMEINT(tok):
+    r"(?P<val>\d+)\s*"  # some int
+    strval = tok.lexer.lexmatch.group("val")
+    # print "INT: '%s'" % strval
+    tok.value = int(strval)
+    
+    goto_state(tok, "INITIAL")
+    return tok
+
+@token_rule
+def t_prec_SOMEINT(tok):
+    r"(?P<val>\d+)\s*"  # some int
+    strval = tok.lexer.lexmatch.group("val")
+    #print ("PREC INT: '%s'" % strval)
+    tok.value = int(strval)
     goto_state(tok, "INITIAL")
     return tok
 
@@ -528,8 +540,6 @@ def t_prec_algn_len_SOMEINT(tok):
 @token_rule
 def t_TYPE_ATTR(tok):
     r"type\s*:\s*"
-    # goto_state(tok,'type')
-    # print("begin TYPE_ATTR: '%s'" % tok.value)
     tok.value = "type"
     return tok
 

@@ -277,7 +277,7 @@ def parse_l(l, rundebug, error_file, f):
                 #         print("Results2 '%s'" % s)
 
         if rundebug:
-            debug("Stack:%s" % stack)
+            #debug("Stack:%s" % stack)
             print(("parser %s" % parser))
 
         return x
@@ -306,6 +306,7 @@ def parse(filename, debug):
     f = open("lasterror.txt", "a")
 
     line = ""
+
     for l in fd.readlines():
         l = l.strip()
         if len(l) <= 0:
@@ -318,6 +319,7 @@ def parse(filename, debug):
             line = l
         else:
             line = line + " " + l
+
     fd.close()
 
     if line:
