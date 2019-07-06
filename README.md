@@ -11,18 +11,12 @@ usage
 
 convert the tu to python:
 
-    python gcc/tree/reader.py  file.tu > test_graph.py
+    gcc/tree/reader.py  file.tu > test_graph.json
 
 now you can split up the output:
 
-    PYTHONPATH=. python dfs.py  testgraph
-
-for now, need to add in an init
-
-    touch cache/__init__.py
-
-And then process one of the files :
-
-    PYTHONPATH=. python ../read_sources.py cache._00001368
+    jq -s "{nodes :.}" test_graph.json  > test_graph_jq.json
+    
+    splitter.py test_graph_jq.json
 
 

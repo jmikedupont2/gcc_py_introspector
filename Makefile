@@ -1,3 +1,6 @@
+index:
+	python3 splitter.py linux_jq.json
+
 files := $(wildcard tests/*.tu)
 FILES2 := $(patsubst %.tu,%.tu.out,$(files))
 all : $(FILES2)
