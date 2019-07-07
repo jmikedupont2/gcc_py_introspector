@@ -21,13 +21,17 @@ def read_rules():
                         rules['_type'][x]={'field.name' : { }}
                     if f not in rules['_type'][x]['field.name']:
                         rules['_type'][x]['field.name'][f] = { 'field.type' : y }
+            
     return rules
+
 
 
 def find_string(obj, rules, strings):
     #pprint.pprint(obj)
     #pprint.pprint(rules)
-    obj['_string'] = "NOT FOUND"
+    if '_string' not in obj:
+        obj['_string'] = "NOT FOUND" # default
+        
     if obj['_type'] in rules['_type']:
         _type = obj['_type']
         for f in rules['_type'][_type]['field.name']:
@@ -35,7 +39,7 @@ def find_string(obj, rules, strings):
                 v = obj[f]
                 if v in strings :
                     obj['_string'] = list(strings[v].keys())[0]
-        
+    pprint.pprint(obj)
     return obj
 if __name__ == '__main__':
     strings = read_strings()
@@ -43,7 +47,7 @@ if __name__ == '__main__':
     nodes = [ find_string(split_src_p(obj), rules, strings) for obj in read_nodes() if filter_nodes(obj, 'srcp')]
     RowIndexer().build_indexes(
         index_defs={
-            "FILENAME_LINE_NODE_TYPE_TO_STR": ['filename','line_number','_type', '_string'],
+            "FILENAME_LINE_NODE_TYPE_TO_STR": ['filename','line_number','_type', '_string','_id'],
         },
         data=nodes
     )

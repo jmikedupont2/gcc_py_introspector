@@ -154,7 +154,7 @@ class FieldIndexer(Indexer):
                     val2 = resolve_type(val)
                     res.append(val2)
                 elif f == 'field.id':
-                    val = obj[fn]
+                    val = str(obj[fn])
                     res.append(val)
 
                 else:
