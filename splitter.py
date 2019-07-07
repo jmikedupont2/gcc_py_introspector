@@ -59,6 +59,8 @@ def clean(obj):
                         for name in v:
                             value = v[name]
                             obj[name] = value
+    if obj is None:
+        raise Exception()
     return obj
 
 
@@ -77,7 +79,8 @@ class Indexer:
                     pprint.pprint(cur)
                     raise Exception(cur)
                 if not isinstance(v, str):
-                    v = str(v)
+                    #v = v
+                    pass
                 if v in cur:
                     if pos == lenx:
                         # add
@@ -98,8 +101,8 @@ class Indexer:
         print("Building" + index_name)
         results = []
         for obj in data:
-            obj = clean(obj)
-            # pprint.pprint({"debug obj":obj})
+            #obj = clean(obj)
+            #pprint.pprint({"debug obj":obj})
             for res in self.index(obj, field_list):
                 results.append(res)
                 # now append the fields in order
@@ -125,6 +128,8 @@ class Indexer:
 
 class RowIndexer(Indexer):
     def index(self, obj, field_list):
+        if obj is None:
+            raise Exception("None object passed")
         res = []
         for f in field_list: # fields to index
             if f in obj:
@@ -192,34 +197,37 @@ class CoOccurIndexer(Indexer):
 
 
 def read_nodes():
-    return json.load(open(sys.argv[1]))['nodes']
+    return [ clean(obj) for obj in json.load(open(sys.argv[1]))['nodes']]
+
+if __name__ == '__main__':
+    nodes = read_nodes()
+    if True:
+        RowIndexer().build_indexes(
+            index_defs={
+                ID_TO_NODE_TYPE:  ['_id', '_type'],
+                "NODE_TYPE_TO_ID": ['_type', '_id'],
+            },
+            data=nodes
+        )
+
+        # these indexs depend on the previous ones
+        FieldIndexer().build_indexes(
+            index_defs={
+                "NODE_TYPE_LIST_OF_FIELDS":  ['_type', 'field.name'],
+                # , 'field.id'
+                "NODE_TYPE_TO_FIELD_NAME_AND_TYPE":  ['_type', 'field.name', 'field.type'],
+                "NODE_TYPE_TO_TYPE_AND_FIELDNAME":  ['_type', 'field.type', 'field.name'],
+                "NODE_TYPE_TO_TYPE_AND_FIELDNAME_AND_ID":  ['_type', 'field.type', 'field.name', '_id'],
+            },
+            data=nodes
+        )
 
 
-nodes = read_nodes()
-if True:
-    RowIndexer().build_indexes(
+    # now we want the times each field occurs with another field, so all the pairs of fields
+    CoOccurIndexer().build_indexes(
         index_defs={
-            ID_TO_NODE_TYPE:  ['_id', '_type'],
-            "NODE_TYPE_TO_ID": ['_type', '_id'],
+            "NODE_TYPE_LIST_OF_FIELDS_CO":  ['_type', 'field.name', 'field.name2'],
         },
         data=nodes
     )
 
-    # these indexs depend on the previous ones
-    FieldIndexer().build_indexes(
-        index_defs={
-            "NODE_TYPE_LIST_OF_FIELDS":  ['_type', 'field.name'],
-            # , 'field.id'
-            "NODE_TYPE_TO_FIELD_NAME_AND_TYPE":  ['_type', 'field.name', 'field.type'],
-        },
-        data=nodes
-    )
-
-
-# now we want the times each field occurs with another field, so all the pairs of fields
-CoOccurIndexer().build_indexes(
-    index_defs={
-        "NODE_TYPE_LIST_OF_FIELDS_CO":  ['_type', 'field.name', 'field.name2'],
-    },
-    data=nodes
-)
