@@ -3,6 +3,7 @@
 import json
 import pprint
 import sys
+import re
 import pdb
 # defaultdict(default_factory[, ...]) --> dict with default factory
 indexes = {}
@@ -61,6 +62,14 @@ def clean(obj):
                             obj[name] = value
     if obj is None:
         raise Exception()
+    if '_string' in obj:
+        v = obj['_string']
+        m = re.match(r"(?P<value>.*)lngt: (?P<len>\d+)$", v)
+        if m :
+            v2 = m.group('value')
+            ln = int(m.group('len'))
+            obj['_string'] = v2[:ln]
+            obj['_string_len'] = ln
     return obj
 
 
