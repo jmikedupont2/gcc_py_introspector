@@ -1,6 +1,7 @@
 rdflib==4.2.1
 ply
-click
+#toolz
+-e git+https://github.com/pytoolz/toolz/#egg=toolz
 # alabaster==0.7.8
 # antlr-python-runtime==3.4
 # apipkg==1.4
@@ -212,3 +213,19 @@ click
 # yelp==1.0.1
 # youtube-dl==2016.6.25
 # zope.interface==4.3.2
+appdirs==1.4.3
+attrs==19.1.0
+autopep8==1.4.4
+black==19.3b0
+Click==7.0
+entrypoints==0.3
+flake8==3.7.8
+importmagic==0.1.7
+jedi==0.14.1
+mccabe==0.6.1
+parso==0.5.1
+pycodestyle==2.5.0
+pyflakes==2.1.1
+rope-py3k==0.9.4.post1
+toml==0.10.0
+yapf==0.28.0
