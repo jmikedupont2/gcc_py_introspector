@@ -1,3 +1,4 @@
+mysorted = sorted
 from toolz.curried import *
 from collections import Counter
 import json
@@ -5,6 +6,7 @@ import click
 import pprint
 from itertools import starmap
 import pdb
+import csv
 
 # from toolz import join, merge
 from itertools import filterfalse
@@ -32,7 +34,7 @@ def pushdown(role, key, remove, obj):
         if k in remove:
             continue
         if role:
-            data[ role + "!" + k] = obj[k]  #
+            data[ role + "_" + k] = obj[k]  #
         else:
             data[k] = obj[k]  #
     return data
@@ -50,8 +52,8 @@ def mdissoc(fields, obj):
 def join_field(role_from, role_to, field_name, nodes, exclude_left=(), exclude_right=()):
     from_field_name = field_name
     if role_from:
-        from_field_name = role_from + "!" + field_name
-    to_field_name = role_to + "!_id"
+        from_field_name = role_from + "_" + field_name
+    to_field_name = role_to + "__id"
     
     results = keyjoin(
             from_field_name,
@@ -80,9 +82,9 @@ the new to field is also prefixed by the role
     """
     new_from_field_name = from_field_name
     if role_from:
-        new_from_field_name = role_from + "!" + from_field_name
+        new_from_field_name = role_from + "_" + from_field_name
         
-    new_to_field_name = role_to + "!" + to_field_name
+    new_to_field_name = role_to + "_" + to_field_name
  
     left = list(filterfalse(
                 get_in(from_field_name),
@@ -130,19 +132,20 @@ def expand_types(name):
 
 @click.command()
 @click.argument("input-file", type=click.File("r"))
-def main(input_file):
+@click.argument("output-file", type=click.File("w"))
+def main(input_file, output_file):
     nodes = json.load(input_file)["nodes"]
 
     types_list = join_field("typed",
-                        "typed!type",
+                        "typed_type",
                         'type',
                          nodes)
     
     named_types = join_field_extra(
         #"named_typed",
         None,
-        "typed!name",
-        'typed!name',
+        "typed_name",
+        'typed_name',
         '_id',
         types_list,
         nodes,
@@ -150,7 +153,7 @@ def main(input_file):
         exclude_right=('_string_len','_type'))
 
     for field in ('size','min', 'max'):
-        path = 'typed!type!' + field
+        path = 'typed_type_' + field
         named_types = join_field_extra(
             None,
             path,
@@ -166,8 +169,19 @@ def main(input_file):
         )
        
     results = named_types
-    pprint.pprint(frequencies(list(concat(map(keys, results)))))
 
+    field_names_data = dict(frequencies(list(concat(map(keys, results)))))
+    pprint.pprint({"Field":field_names_data})
+    def foo2(x):
+        return x[1]
+    items = field_names_data.items()
+    pprint.pprint({"ITEMS":items})
+    sorted_fields = list(map(first, list(reversed(sorted(items, key=foo2)))))
+    pprint.pprint(sorted_fields)
+
+    out = csv.DictWriter(output_file, fieldnames=sorted_fields)
+    out.writeheader()
+    out.writerows(results)
 
 if __name__ == "__main__":
     main()
