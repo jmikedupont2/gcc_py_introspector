@@ -112,7 +112,8 @@ the new to field is also prefixed by the role
             new_to_field_name,
             right,
         )
-    results = map(mdissoc((new_to_field_name, new_from_field_name)),results)
+    # This removes the ids from the results
+    # results = map(mdissoc((new_to_field_name, new_from_field_name)),results)
     results_list = list(results)
 
     if debug:
@@ -136,11 +137,14 @@ def expand_types(name):
 def main(input_file, output_file):
     nodes = json.load(input_file)["nodes"]
 
+
+    ## first join on type
     types_list = join_field("typed",
                         "typed_type",
                         'type',
                          nodes)
-    
+
+    # now join by name
     named_types = join_field_extra(
         #"named_typed",
         None,
@@ -152,6 +156,7 @@ def main(input_file, output_file):
         debug=False,
         exclude_right=('_string_len','_type'))
 
+    # now join on fields in the integer
     for field in ('size','min', 'max'):
         path = 'typed_type_' + field
         named_types = join_field_extra(
@@ -170,15 +175,20 @@ def main(input_file, output_file):
        
     results = named_types
 
+    # get a list of the fields used
     field_names_data = dict(frequencies(list(concat(map(keys, results)))))
-    pprint.pprint({"Field":field_names_data})
+    # pprint.pprint({"Field":field_names_data})
+
+
+    # sort them by values
     def foo2(x):
         return x[1]
     items = field_names_data.items()
-    pprint.pprint({"ITEMS":items})
+    # pprint.pprint({"ITEMS":items})
     sorted_fields = list(map(first, list(reversed(sorted(items, key=foo2)))))
-    pprint.pprint(sorted_fields)
+    # pprint.pprint(sorted_fields)
 
+    # write them to csv
     out = csv.DictWriter(output_file, fieldnames=sorted_fields)
     out.writeheader()
     out.writerows(results)
