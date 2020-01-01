@@ -11,7 +11,7 @@ usage
 
 convert the tu to python:
 
-    gcc/tree/reader.py  file.tu > test_graph.json
+    python3.7  -m  gcc.tree.gcc-tu-reader  file.tu  > file.json
 
 now you can split up the output:
 
