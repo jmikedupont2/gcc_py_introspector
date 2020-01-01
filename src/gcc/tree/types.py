@@ -86,6 +86,9 @@ class AsmExpr(NodeDecl):
 class SaveExpr(NodeDecl):
     """save_expr"""
 
+class FixTruncExpr(NodeDecl):
+    """fix_trunc_expr"""
+
 
 class ArrayRef(NodeDecl):
     """array_ref"""

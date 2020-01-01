@@ -119,6 +119,7 @@ result_decl
 return_expr
 rshift_expr
 save_expr
+fix_trunc_expr
 scope_ref
 sizeof_expr
 statement_list

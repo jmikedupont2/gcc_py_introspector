@@ -4,7 +4,6 @@
 import sys
 
 import ply.lex as lex
-
 # import ply.yacc as yacc
 from ply.lex import TOKEN
 
@@ -185,6 +184,11 @@ def t_NTYPE_IDENTIFIER_NODE(tok):
 @token_rule
 def t_NTYPE_SAVE_EXPR(tok):
     r"save_expr"
+    return tok
+
+@token_rule
+def t_NTYPE_FIX_TRUNC_EXPR(tok):
+    r"fix_trunc_expr"
     return tok
 
 
@@ -659,7 +663,7 @@ def t_sign_error(t):
 
 @token_rule
 def t_REALVALUE(tok):  # 1.0e+0
-    r"(?P<real>\d+\.\d+e\+\d+)"
+    r"(?P<real>\d+\.\d+(e[\+\-]\d+)?)"
     return tok
 
 

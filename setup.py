@@ -42,6 +42,7 @@ setup(
     long_description="gcc .tu dump file processing utility",
     author="James Michael DuPont",
     author_email="jamesmikedupont@gmail.com",
+    scripts=["src/gcc/tree/gcc-tu-reader.py"],
     url="https://www.python.org/sigs/distutils-sig/",
     packages=["gcc.tree"],
     package_dir={"": "src"},

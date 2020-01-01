@@ -22,32 +22,13 @@ from gcc.tree.tu import tokens
 from gcc.tree.tu_attrs import *
 from gcc.tree.utils import create_list, goto_initial  # , merge_list
 
+# the first rule is important
 start = "anynode"
-
-# @parser_rule
-
 
 def p_any_node(psr_val):
     "anynode : node "
     # the node declaration, top level
     psr_val[0] = psr_val[1].finished()
-
-    #declare_node(psr_val[1])
-
-
-# the first rule is important
-
-# @parser_node_rule
-# def p_node_constructor(psr_val):
-#     "node : NODE NTYPE_CONSTRUCTOR CLEN idx_val_list"
-#     print("DEBUG LEN" , psr_val[3])
-#     psr_val[0] = "GOOBAR"
-#     #psr_val[0] = FakeConstructor()
-#     # psr_val[0] = ConstructorList(
-#     #     node=NodeRef(psr_val[1],'node'),
-#     #     llen=SomeLen(psr_val[3]),
-#     #     llist=ConstructorList2(psr_val[4]),
-#     #     )
 
 
 @parser_rule
@@ -62,37 +43,6 @@ def p_node_id(psr_val):
         }
     )
     goto_initial(psr_val)  # begin the string group
-
-
-
-
-# @parser_node_rule
-# def p_node_constructor_vals(psr_val):
-#     "node : NODE NTYPE_CONSTRUCTOR LEN val_list"
-#     psr_val[0] = gcc.tree.ast.Something(
-#         **{
-#             "__type__": "constructor",
-#             "node": psr_val[1],
-#             "idx_len": psr_val[3],
-#             "idx_list": psr_val[4],
-#         }
-#     )
-
-
-# @parser_node_rule
-# def p_node_constructor_empty(psr_val):
-#     "node : NODE NTYPE_CONSTRUCTOR LEN"
-#     psr_val[0] = gcc.tree.ast.Something(
-#         **{
-#             "__type__": "constructor",
-#             "node": psr_val[1],
-#             "idx_len": SomeLenpsr_val[3],
-#         }
-#     )
-
-
-##########################################
-
 
 @parser_rule
 def p_operator_add(psr_val):
@@ -502,8 +452,11 @@ def p_attr_list3a(psr_val):
     psr_val[0] = psr_val[1]
 
 def p_error(x):
-    print(("error occur %s" % x))
+    print(("An error occured %s" % x))
     raise Exception(x)
 
+@parser_node_rule
+def p_NTYPE_TRANSLATION_UNIT_DECL_node_empty(psr_val):
+    "node : NODE NTYPE_TRANSLATION_UNIT_DECL"
 
 parser = yacc.yacc()

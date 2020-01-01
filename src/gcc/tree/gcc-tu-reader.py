@@ -329,7 +329,7 @@ def parse(filename, debug):
 
 @click.command()
 @click.argument("filename")
-@click.option("--debug", default=False, type=bool)
+@click.option("--debug/--no-debug", default=False)
 def main(filename, debug):
     """
     Reader for a tu file
