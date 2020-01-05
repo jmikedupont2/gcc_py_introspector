@@ -298,7 +298,7 @@ def parse_l(l, rundebug, error_file, f):
     return None
 
 def parse(filename, debug):
-    print(("going to open %s" % filename))
+    #print(("going to open %s" % filename))
     fd = open(filename)
     # open the error file in case there are any errors they will be written here.
     error_file = open(filename + ".err", "w")

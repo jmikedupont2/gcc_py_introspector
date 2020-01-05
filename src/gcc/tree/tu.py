@@ -228,7 +228,8 @@ def t_STRG(tok):
 def t_CLEN(tok):  # constructor length
     r"lngt:\s*(?P<len>\d+)"  # (?P<len>\d+)
     val = tok.lexer.lexmatch.group("len")
-    tok.value = SomeLen(int(val))
+    #tok.value = SomeLen(int(val))
+    tok.value = int(val)
 
     return tok
 
