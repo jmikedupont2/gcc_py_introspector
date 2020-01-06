@@ -3,7 +3,7 @@ import re
 import copy
 import pprint
 import collections
-
+import click
 data = {
     'undefined' : {'_type' : 'undefined'}
 }
@@ -98,11 +98,7 @@ def collect_scalars(d):
                 else:
                     scalars[f][v]=scalars[f][v]+1
 
-# collect the data and the scalars
-with open('t') as inf:
-    for l in inf:
-        d = json.loads(l)
-        data[d['_id']]= d
+
 
 positions = [
     'SELF' # 0 
@@ -182,20 +178,28 @@ def recurse(_id, depth=0, seen = {}, root = None):
     seen[_id] = newt
     return newt
     
-types2 = collections.Counter()
-
-# now look at the fields
-for _id in data:
-    t = recurse(_id,depth=0, seen={})
-    #print(_id, pprint.pformat(t))
-    #print(t)
-
-    types2[str(t)] += 1
-        
-for x in types2.most_common(10):
-    print(x)
-
 #print(json.dumps(data))
 #for x in types2:
 #    print(x, types2[x])
 
+# collect the data and the scalars
+@click.command()
+@click.argument("filename")
+@click.option("--debug/--no-debug", default=False)
+def mainf(filename, debug):
+    with open(filename) as inf:
+        for l in inf:
+            d = json.loads(l)
+            data[d['_id']]= d
+
+    types2 = collections.Counter()
+
+    # now look at the fields
+    for _id in data:
+        t = recurse(_id,depth=0, seen={})
+        #print(_id, pprint.pformat(t))
+        #print(t)
+        types2[str(t)] += 1
+        
+    for x in types2.most_common(10):
+        print(x)
