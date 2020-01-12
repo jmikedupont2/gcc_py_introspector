@@ -1,7 +1,7 @@
 """Read the json string and does some processing on it."""
 import collections
 import json
-
+import sys
 import click
 
 data = {"undefined": {"_type": "undefined"}}
@@ -221,7 +221,15 @@ def recurse(_id, depth=0, seen={}, root=None):
                 pos = "GREAT({})-GRANDPARENT".format(pos - 3)
             return "{}".format(pos)
 
+    if depth > 10:
+        if depth % 50 == 0:
+            sys.stdout.write(">")
+            sys.stdout.flush()
+
     if depth > 900:
+        sys.stdout.write("!")
+        sys.stdout.flush()
+
         return "STACK"
 
     if _id in seen:
@@ -257,20 +265,35 @@ def recurse(_id, depth=0, seen={}, root=None):
 
 def main_routine(filename, debug):
     """The main routine calls all the functions.""" # NOQA
+    print ("Reading file.")
+    count = 0
+        
     with open(filename) as inf:
         for l in inf:
             d = json.loads(l)
             data[d["_id"]] = d
-
+            
+            count = count + 1
+            if count % 1000 == 0:
+                sys.stdout.write(".")
+    
+    print ("Done reading file.")
     types2 = collections.Counter()
 
+    count = 0 
     # now look at the fields
     for _id in data:
+        #print("r",_id)
         t = recurse(_id, depth=0, seen={})
         # print(_id, pprint.pformat(t))
         # print(t)
         types2[str(t)] += 1
-
+        count = count + 1
+        if count % 100 == 0:
+            sys.stdout.write("-")
+            sys.stdout.flush()
+            
+    print ("Done collecting typese.")
     for x in types2.most_common(10):
         print(x)
 
@@ -281,3 +304,6 @@ def main_routine(filename, debug):
 def mainf(filename, debug):
     """The main routine calls all the functions.""" # NOQA
     main_routine(filename, debug)
+
+if __name__ == '__main__':
+    mainf()
