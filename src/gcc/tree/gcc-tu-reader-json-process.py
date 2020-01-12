@@ -1,8 +1,8 @@
 """Read the json string and does some processing on it."""
 import collections
 import json
-import sys
 
+import click
 
 data = {"undefined": {"_type": "undefined"}}
 
@@ -21,9 +21,8 @@ main = {
 }
 
 scalars = {
-    "algn": {
-        "32": 2188, "8": 2990,
-        "128": 17, "64": 5629, "16": 211, "1": 102},
+    "algn": {"32": 2188, "8": 2990, "128": 17,
+             "64": 5629, "16": 211, "1": 102},
     "prec": {
         "32": 250,
         "8": 26,
@@ -257,7 +256,7 @@ def recurse(_id, depth=0, seen={}, root=None):
 
 
 def main(filename):
-    """The main routine of the program does everything.""" # NOQA
+    """The main routine of the program does everything."""  # NOQA
     with open(filename) as inf:
         for l in inf:
             d = json.loads(l)
@@ -281,5 +280,24 @@ def main(filename):
     #    print(x, types2[x])
 
 
-if __name__ == "__main__":
-    main(sys.argv[1])
+@click.command()
+@click.argument("filename")
+@click.option("--debug/--no-debug", default=False)
+def mainf(filename, debug):
+    """The main routine calls all the functions.""" # NOQA
+    with open(filename) as inf:
+        for l in inf:
+            d = json.loads(l)
+            data[d["_id"]] = d
+
+    types2 = collections.Counter()
+
+    # now look at the fields
+    for _id in data:
+        t = recurse(_id, depth=0, seen={})
+        # print(_id, pprint.pformat(t))
+        # print(t)
+        types2[str(t)] += 1
+
+    for x in types2.most_common(10):
+        print(x)
