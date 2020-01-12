@@ -4,6 +4,8 @@ import json
 import sys
 import click
 
+block_size = 10000
+
 data = {"undefined": {"_type": "undefined"}}
 
 
@@ -289,14 +291,15 @@ def main_routine(filename, debug):
         # print(t)
         types2[str(t)] += 1
         count = count + 1
-        if count % 100 == 0:
-            sys.stdout.write("-")
-            sys.stdout.flush()
-            
-    print ("Done collecting typese.")
-    for x in types2.most_common(10):
-        print(x)
+        if count % 200 == 0:
+            sys.stdout.write("-") # every 300 dump out
+            sys.stdout.flush()            
 
+        if count % block_size == 0:
+            print ("Checkpoint types.")
+            for x in types2.most_common(100):
+                print(x)
+            types2 = collections.Counter()
 
 @click.command()
 @click.argument("filename")
